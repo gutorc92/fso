@@ -6,7 +6,8 @@
 double distancebtdots(Dot *a, Dot *b){
 	double x = pow((a->x - b->x),2);
 	double y = pow((a->y - b->y),2);
-	return sqrt(x + y);
+	double result = sqrt(x + y);
+	return result;
 }
 
 int triangle_exists(Triangle* t){
@@ -25,9 +26,9 @@ double triangle_perimeter(Triangle* t){
 	return a + b + c;
 }
 double triangle_area(Triangle* t){
-	double main = (t->first.x * t->second.y) + (t->first.y * t->third.x) + (t->second.x * t->third.y);
+	double pri = (t->first.x * t->second.y) + (t->first.y * t->third.x) + (t->second.x * t->third.y);
 	double sec = (t->third.x * t->second.y) + (t->first.x * t->third.y) + (t->second.x * t->first.y);
-	double result = main - sec;
+	double result = pri - sec;
 	if(result < 0) result = result * (-1);
 	return result/2;
 

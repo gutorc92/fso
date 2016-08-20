@@ -3,7 +3,7 @@
 #
 
 #Flags used to compile files
-CFLAGS = -g -Wall -std=c99
+CFLAGS = -g -Wall -std=c99 -Werror -O2 -lm
 
 #Compile
 CXX=gcc

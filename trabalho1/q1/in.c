@@ -1,15 +1,16 @@
 #include "in.h"
 #include "types.h"
 #include <stdio.h>
+#include <math.h>
 #include "operations.h"
 
 int read_dot(Dot* d){
 	printf("Digite a coordenada x do ponto:\n");
-	scanf("%lf",&d->x);
+	int result = scanf("%lf",&d->x);
 	printf("Digite a coordenada y do ponto:\n");
-	scanf("%lf",&d->y);
+	result = scanf("%lf",&d->y);
 
-	return 1;
+	return result;
 }
 int print_dot(Dot* d){
 	printf("O ponto tem coordenadas x: %5.2lf e y: %5.2lf\n",d->x,d->y);
@@ -41,5 +42,6 @@ int print_triangle(Triangle* t){
 int print_triangle_info(Triangle* t){
 	printf("O perímetro do triângulo: %5.2lf\n",triangle_perimeter(t));
 	printf("A área do triângulo: %5.2lf\n",triangle_area(t));
+	return 1;
 }
 

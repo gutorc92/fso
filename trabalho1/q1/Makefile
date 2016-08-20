@@ -3,13 +3,14 @@
 #
 
 #Flags used to compile files
-CPPFLAGS = -g -Wall 
+CFLAGS = -g -Wall -Werror -O2 -lm 
 
 #Compile
-CXX=gcc
+CC=gcc
 
 #Deps
 DEPS=types.h operations.h in.h 
+
 #Name of the executable file
 TARGET=prog
 
@@ -20,10 +21,10 @@ OBJ = main.o operations.o in.o
 all: $(TARGET)
 
 %.o: %.c $(DEPS)
-	$(CXX) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TARGET): $(OBJ)
-	$(CXX) $(CPPFLAGS) -o $@ $^ -lm
+	$(CC) $(CFLAGS) -o $@ $^ -lm 
 
 clean:
 	rm -f $(TARGET) *.o
