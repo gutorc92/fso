@@ -9,3 +9,11 @@ c.
 Para copilar a questão basta usar o comando make dentro
 do diretório da questão.
 
+Todo arquivo deve ter o cabeçalho seguinte:
+
+/*
+ * Disciplina de FSO - 2016/2
+ * Alunos:
+ *      Phelipe Wener  - 120132893
+ *      Gustavo Coelho - 
+ */
