@@ -2,6 +2,7 @@
 #define OPERATIONS_H
 #include "types.h"
 #include <math.h>
+
 int order(Command* c, Vector * v);
 int print_vector(Vector* v);
 int has_command(Command * c, char * argv[]);

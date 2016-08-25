@@ -4,24 +4,34 @@
 #include "operations.h"
 
 int main(int argc, char * argv[]){
-	/*
-	printf("Numero de argumentos: %d\n",argc);
-	for(int i = 2; i < argc; i++){
-		printf("%s \n",argv[i]);
-	}
-	*/
 	Command command;
 	Vector vector;
-	int i = 0;
-	if(has_command(&command,argv)){
-		i = 2;
+
+	int number_cmds = 0;
+
+	if(argc == 1) {
+		printf("Please, enter with numbers!\n");
+		return 0;
+	} else {
+		if(has_command(&command,argv)) {
+			number_cmds = 2;
+		}
 	}
-	//printf("i: %d\n",i);
-	init(&vector,argc-i);
-	for(int j = 0; j < argc - i;j++){
-		vector.data[j] = atoi(argv[j + i]);
+
+	// vector_size is equals to difference between 
+	// argc  without
+	int vector_size = argc - number_cmds;
+
+	init(&vector, vector_size);
+
+	for(int j = 0; j < vector_size;j++) {
+		vector.data[j] = atoi(argv[j + number_cmds]);
 	}
+	printf("Values passed: ");
 	print_vector(&vector);
+
+	printf("Values in order ");
 	order(&command,&vector);
+
 	return 0;
 }
