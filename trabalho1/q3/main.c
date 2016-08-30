@@ -26,8 +26,11 @@ int main() {
 
 	int success_read = scanf("%s", s1);
 
-	if(success_read){
+	if(success_read) {
 		strcpy(s2, s1);
+	} else {
+		printf("Valor não pode ser lido e o aplicativo será encerrado\n");
+		return 0;
 	}
 
 	printf("String 2 é %s\n", s2);
