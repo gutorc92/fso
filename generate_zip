@@ -1,0 +1,14 @@
+#!/bin/sh
+name="phelipe"
+surname="wener"
+id="120132893"
+name2="gustavo"
+surname2="coelho"
+id2="1100300599"
+filename=${name}_${surname}_${id}_${name2}_${surname2}_${id2}_${1}
+echo "$filename"
+zip -r -T "$filename" "$2"
+
+
+
+
