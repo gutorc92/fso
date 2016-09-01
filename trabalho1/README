@@ -2,18 +2,18 @@ Cada questão do trabalho deve ser produzida em seu diretório
 seguindo a seguinte padronizacão:
 	q(número da questão)
 
-O arquivo Makefile deve ser compiado para o diretório da 
+O arquivo Makefile deve ser compiado para o diretório da
 questão e a diretiva PROG1 deve conter o nome do arquivo
-c. 
+c.
 
 Para copilar a questão basta usar o comando make dentro
 do diretório da questão.
 
-Todo arquivo deve ter o cabeçalho seguinte:
+Todo arquivo main deve ter o seguinte cabeçalho:
 
 /*
  * Disciplina de FSO - 2016/2
  * Alunos:
  *      Phelipe Wener  - 120132893
- *      Gustavo Coelho - 110030559 
+ *      Gustavo Coelho - 110030559
  */

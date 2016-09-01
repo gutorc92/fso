@@ -1,8 +1,8 @@
 /*
  * Disciplina de FSO - 2016/2
  * Alunos:
- * 	Phelipe Wener  - 120132893
- * 	Gustavo Coelho - 
+ *      Phelipe Wener  - 120132893
+ *      Gustavo Coelho - 110030559
  */
 #include<stdio.h>
 #include<stdlib.h>

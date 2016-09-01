@@ -1,3 +1,9 @@
+/*
+ * Disciplina de FSO - 2016/2
+ * Alunos:
+ *      Phelipe Wener  - 120132893
+ *      Gustavo Coelho - 110030559
+ */
 #include<stdio.h>
 #include<stdlib.h>
 #include "types.h"
@@ -18,7 +24,7 @@ int main(int argc, char * argv[]){
 		}
 	}
 
-	// vector_size is equals to difference between 
+	// vector_size is equals to difference between
 	// argc  without
 	int vector_size = argc - number_cmds;
 
