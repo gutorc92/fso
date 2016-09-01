@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
 	if(triangle_exists(&t)){
 		print_triangle_info(&t);
 	}else{
-		printf("Os pontos fornecidos não formam um triângulo");
+		printf("Os pontos fornecidos não formam um triângulo\n");
 	}
 	return 0;
 }
