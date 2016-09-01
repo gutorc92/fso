@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Abra esse arquivo utilizando qualquer navegador -->
 <html lang="pt-br">
   <head>
     <title>FSO documentação</title>
@@ -10,7 +11,7 @@
         color: #FFF;
         font-weight: bold;
         padding: 10px;
-        width: 200px;
+        width: 25%;
       }
     </style>
   </head>
@@ -20,8 +21,11 @@
       Foi utilizado distribuições linux pelos dois alunos, especificamente
       o SO debian. Para compilação do código foi utilizado gcc, tal como consta
       todos makefiles, como editor de texto foi utilizado vim e Atom.
+      Os tutoriais abaixo só foram testados em distribuições debian.
     </p>
+
     <h1>Instruções de uso</h1>
+
     <h3>Questão 1</h3>
     <p>
       Entre na pasta da q1 pelo terminal e execute o comando:
@@ -34,6 +38,34 @@
       <br/>
       Para executar alguns casos de teste definidos, use:
       <p class="terminal">./prog < test</p>
+    </p>
+
+    <h3>Questão 2</h3>
+    <p>
+      Entre na pasta da q2 pelo terminal e execute o comando:
+      <p class="terminal">$ make</p>
+      O executável irá ordenar números passados por argumento em sua execução,
+      para isso execute:
+      <p class="terminal">$ ./prog numero1 numero2 numero3...</p>
+      Para qualquer número inteiro. Você pode usar antes dos números os comandos
+      -d e -r ainda, tal -d a ordem será crescente e -r a
+      ordenação será decrescente.
+      <br/>
+    </p>
+
+    <h3>Questão 3</h3>
+    <p>
+      Para essa questão foi criado um README que responde as duas perguntas
+      de seu enunciado. Olhar a pasta q3.
+      <br/>
+      Entre na pasta da q3 pelo terminal e execute o comando:
+      <p class="terminal">$ make</p>
+      Em seguida execute:
+      <p class="terminal">$ ./main</p>
+      Primeiramente será impresso algumas linhas, seguidos de requisição de texto,
+      digite algum texto sem espaço, tabulaçao ou quebra de linha e ele ira imprimir
+      o valor de string 2 e depois o seu valor concatenado em outra string.
+      </br>
     </p>
   </body>
 </html>
