@@ -12,6 +12,9 @@
  * do tipo SIGALRM, aguarda por esse sinal; quando o sinal é recebido, imprime
  * na tela a ocorrência do evento e, em seguida, se encerra. Faça o uso da
  * função pause(void) para aguardar pelo sinal enviado pelo processo filho.
+ *
+ * As observações desse programa em resposta ao enunciado estão no arquivo
+ * README.md nessa mesma pasta.
  */
 #include <stdio.h>
 #include <stdlib.h>
