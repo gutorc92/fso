@@ -7,7 +7,8 @@ surname2="coelho"
 id2="1100300599"
 filename=${name}_${surname}_${id}_${name2}_${surname2}_${id2}_${1}
 echo "$filename"
-zip -r -T "$filename" "$2"
+# Second arg is the folder
+zip -r -T "$filename" $2
 
 
 
