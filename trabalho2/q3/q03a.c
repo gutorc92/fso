@@ -3,20 +3,32 @@
  * Alunos:
  *      Phelipe Wener  - 120132893
  *      Gustavo Coelho - 110030559
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ *  Multiply example:
+ *
+ * 	          |2 |   | 2 2 2 |
+ *  |1 2 3| X |2 | = | 4 4 4 |
+ *            |2 |   | 6 6 6 |
  */
 #include <stdio.h>
 #include <stdlib.h>
 
-/**
+/*
  * exit() call
  */
 void abort_program(void);
 
-/**
+/*
  * Write each space in matrix
  */
 int load_matriz(int dimension_line, int dimension_col,
     int matrix[dimension_line][dimension_col]);
+
+void print_matriz(int dimension_line, int dimension_col,
+    int matrix[dimension_line][dimension_col]);
+
 
 int main() {
   int dimension_col, dimension_line;
@@ -33,22 +45,29 @@ int main() {
     abort_program();
   }
 
-  // To multiply matrices is needed number of columns
-  // equals to lines of second matrix
-  int first_matrix [dimension_col][dimension_line];
-  int second_matrix [dimension_line][dimension_col];
+  /*
+   * To multiply matrices is needed number of columns
+   * equals to lines of second matrix
+   */
+  int first_matrix[dimension_col][dimension_line];
+  int second_matrix[dimension_line][dimension_col];
 
   if(success_read) {
-    success_read = load_matriz(dimension_col, dimension_line, first_matrix);
+    success_read = load_matriz(dimension_line, dimension_col, first_matrix);
   } else {
     abort_program();
   }
 
   if(success_read) {
-    load_matriz(dimension_line, dimension_col, second_matrix);
+    success_read = load_matriz(dimension_col, dimension_line, second_matrix);
   } else {
     abort_program();
   }
+
+  printf("Fist matrix\n");
+  print_matriz(dimension_col, dimension_line, first_matrix);
+  printf("Second matrix\n");
+  print_matriz(dimension_col, dimension_line, second_matrix);
 
   return 0;
 }
@@ -73,6 +92,18 @@ int load_matriz(int dimension_line, int dimension_col,
   }
 
   return success_read;
+}
+
+void print_matriz(int dimension_line, int dimension_col,
+    int matrix[dimension_line][dimension_col]) {
+
+  int i, j;
+  for(i = 0; i < dimension_col; i++) {
+    for(j = 0; j < dimension_line; j++) {
+      printf("%d ", matrix[i][j]);
+    }
+    printf("\n");
+  }
 }
 
 void abort_program(void) {

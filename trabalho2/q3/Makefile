@@ -9,7 +9,7 @@ CFLAGS = -g -Wall -Werror -O2
 CC=gcc
 
 #Name of the executable file
-TARGET=q03a
+TARGET=main
 
 #Files
 PROG1 = q03a.c
