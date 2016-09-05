@@ -1,0 +1,9 @@
+Command used:
+  cat /proc/cpuinfo | grep processor > processor_info
+
+Result:
+
+processor	: 0
+processor	: 1
+processor	: 2
+processor	: 3
