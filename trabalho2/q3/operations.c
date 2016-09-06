@@ -18,6 +18,11 @@ int print_matrix(int **p, int columns, int rows){
 
 }
 
+/*	
+ *  It creates a pointer of pointer with dimensions
+ *  columns and rows.
+ *  
+ */
 int** create_matrix(int columns, int rows){
 	int **p = (int **) malloc(sizeof(int *) * rows);
 	if(!p){
@@ -35,6 +40,12 @@ int** create_matrix(int columns, int rows){
 	}
 	return p;
 }
+
+/*	
+ *  Desalocate a pointer of pointer
+ *  
+ *  
+ */
 int free_matrix(int **p, int columns, int rows){
 	for(int i = 0; i < rows; i++){
 		free(p[i]);	
@@ -42,6 +53,12 @@ int free_matrix(int **p, int columns, int rows){
 	free(p);
 	return 1;
 }
+
+/*	
+ *  It fills a pointer of pointer from default
+ *  input.
+ *  
+ */
 int insert_matrix(int **p, int columns, int rows){
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
@@ -53,7 +70,10 @@ int insert_matrix(int **p, int columns, int rows){
 	return 1;
 }
 
-
+/*	
+ *  It fills a pointer of pointer from a file.
+ *  
+ */
 int read_matrix(int **p, int columns, int rows,const char *file){
 	FILE *fp;
 	fp = fopen(file, "r");

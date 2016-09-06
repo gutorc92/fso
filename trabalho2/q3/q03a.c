@@ -16,12 +16,14 @@
 #include <stdlib.h>
 #include "operations.h"
 
-int main(void) {
+int main(int argc, char * argv[]) {
 
+	
 	int columns = 3, rows = 3;
 	int **p = NULL;
 	int **x = NULL;
 	int **c = NULL; 
+	
 	p = create_matrix(columns,rows);
 
 	if(!p){
