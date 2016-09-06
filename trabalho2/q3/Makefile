@@ -19,7 +19,14 @@ OBJ1 = q03b.o
 PROG2 = q03a.c 
 OBJ2 = q03a.o 
 
+DEPS= operations.h
+LIB= operations.c
+OBJL= operations.o
+
 all: $(TARGET) $(TARGET2)
+
+$(OBJL) : $(LIB) $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJ1) : $(PROG1)
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -28,11 +35,12 @@ $(OBJ1) : $(PROG1)
 $(TARGET): $(OBJ1)
 	$(CC) $(CFLAGS) -o $@ $^ -lm -lpthread
 
-$(OBJ2) : $(PROG2)
+$(OBJ2) :  $(PROG2)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 
-$(TARGET2): $(OBJ2)
-	$(CC) $(CFLAGS) -o $@ $^ -lm -lpthread
+$(TARGET2): $(OBJ2) $(OBJL)
+	$(CC) $(CFLAGS) -o $@ $^ -lm 
+
 clean:
 	rm -f $(TARGET) $(TARGET2) *.o
