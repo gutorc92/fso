@@ -15,6 +15,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*	Function to print the elements of poiter of pointer.
+ *  It need the dimensions of the pointer.
+ *  
+ */
 int print_matrix(int **p, int columns, int rows){
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
@@ -29,14 +33,15 @@ int print_matrix(int **p, int columns, int rows){
 int** create_matrix(int columns, int rows){
 	int **p = (int **) malloc(sizeof(int *) * rows);
 	if(!p){
-		perror("Nao alocou memoria para o ponteiro de ponteiro\n");
+		perror("It has a problem to allocate the pointer p\n");
 		return 0;
 	}
 	for(int i = 0; i < rows; i++){
 		int size = sizeof(int) * columns;
 		p[i] = (int *)malloc(size );
 		if(!p[i]){
-			perror("Nao alocou memoria para o ponteiro das colunas\n");
+			perror("It has a problem to allocate the pointer p\n");
+			fprintf(stderr,"The problem is on the pointer p[%d]\n",i);
 			return 0;
 		}
 	}
@@ -59,6 +64,8 @@ int insert_matrix(int **p, int columns, int rows){
 	}
 	return 1;
 }
+
+
 int read_matrix(int **p, int columns, int rows,const char *file){
 	FILE *fp;
 	fp = fopen(file, "r");
@@ -78,19 +85,20 @@ int main(void) {
 	int **x = NULL;
 	int **c = NULL; 
 	p = create_matrix(columns,rows);
+
 	if(!p){
-		perror("Matrix p nao foi criada corretamente\n");
-		return 1;
+		perror("Matrix p not created correctly\n");
+		return -1;
 	}
 	x = create_matrix(columns,rows);
 	if(!x){
-		perror("Matrix x nao foi criada corretamente\n");
-		return 1;
+		perror("Matrix p not created correctly\n");
+		return -1;
 	}
 	c = create_matrix(columns,rows);
 	if(!c){
-		perror("Matrix c nao foi criada corretamente\n");
-		return 1;
+		perror("Matrix p not created correctly\n");
+		return -1;
 	}
 	read_matrix(p,columns,rows,"matrix1");
 	read_matrix(x,columns,rows,"matrix2");
@@ -104,11 +112,11 @@ int main(void) {
 			c[i][j] = sum;
 		}
 	}
-	printf("Matrix lida do arquivo 1\n");
+	printf("Matrix from file 1\n");
 	print_matrix(p,columns,rows);
-	printf("Matrix lida do arquivo 2\n");
+	printf("Matrix from file 2\n");
 	print_matrix(x,columns,rows);
-	printf("Matrix resultado\n");
+	printf("Result matrix\n");
 	print_matrix(c,columns,rows);
 
 	free_matrix(p,columns,rows);

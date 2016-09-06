@@ -9,19 +9,30 @@ CFLAGS = -g -Wall --std=c99
 CC=gcc
 
 #Name of the executable file
-TARGET=main
+TARGET=b
+TARGET2=a
 
 #Files
-PROG1 = q03b.c
-OBJ = q03b.o
+PROG1 = q03b.c 
+OBJ1 = q03b.o 
 
-all: $(TARGET)
+PROG2 = q03a.c 
+OBJ2 = q03a.o 
 
-%.o: %.c $(DEPS)
+all: $(TARGET) $(TARGET2)
+
+$(OBJ1) : $(PROG1)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(TARGET): $(OBJ)
+
+$(TARGET): $(OBJ1)
 	$(CC) $(CFLAGS) -o $@ $^ -lm -lpthread
 
+$(OBJ2) : $(PROG2)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+
+$(TARGET2): $(OBJ2)
+	$(CC) $(CFLAGS) -o $@ $^ -lm -lpthread
 clean:
-	rm -f $(TARGET) *.o
+	rm -f $(TARGET) $(TARGET2) *.o
