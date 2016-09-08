@@ -16,33 +16,38 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <semaphore.h>
 #include "operations.h"
 
 struct plus_params{
 	int **p;
 	int **x;
+	int **c;
 	int column;
 	int row;
 	int max;
 };
+typedef struct plus_params plus_params;
+
 void* plus_matrix(void * arg){
 	struct plus_params * params = (struct plus_params *)arg;
 	int sum = 0;
 	for(int i = 0; i < params->max; i++){
 		sum += params->p[params->row][i] * params->x[i][params->column];
 	}
-	return (void *)sum;
-
+	printf("Sum %d row %d  column %d\n",sum,params->row,params->column);
+	params->c[params->row][params->column] = sum;
+	return NULL;
 }
 
-int main(void) {
+int main(argv,*argc[]) {
 
 	int columns = 3, rows = 3;
 	int **p = NULL;
 	int **x = NULL;
 	int **c = NULL;
-	
 	pthread_t * thread_ids = malloc(sizeof(pthread_t)*columns*rows);
+	plus_params * params = malloc(sizeof(plus_params)*columns*rows);
 	if(!thread_ids){
 		perror("Thread nao criada corretamente\n");
 		return 1;
@@ -64,20 +69,27 @@ int main(void) {
 	}
 	read_matrix(p,columns,rows,"matrix1");
 	read_matrix(x,columns,rows,"matrix2");
-
+	
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
-			struct plus_params params;
-			params.p = p; 
-			params.x = x; 
-			params.row = i; 
-			params.column = j; 
-			params.max = 3;
-			pthread_create(&thread_ids[i*rows+j], NULL, &plus_matrix, &params);
-			pthread_join(thread_ids[i*rows+j], (void*) &c[i][j]);
+			int id = i*rows+j;
+			plus_params * param = &params[id];
+			param->p = p; 
+			param->x = x; 
+			param->c = c;
+			param->max = 3;
+			param->row = i; 
+			param->column = j; 
+			pthread_create(&thread_ids[id], NULL, &plus_matrix, param);
+			
 		}
 	}
-	
+	for(int i = 0; i < rows; i++){
+		for(int j = 0; j < columns; j++){
+			int r =	pthread_join(thread_ids[i*rows+j], NULL);
+			printf("%d ",r);
+		}
+	}
 	printf("Matrix lida do arquivo 1\n");
 	print_matrix(p,columns,rows);
 	printf("Matrix lida do arquivo 2\n");
@@ -88,5 +100,6 @@ int main(void) {
 	free_matrix(p,columns,rows);
 	free_matrix(x,columns,rows);
 	free_matrix(c,columns,rows);
+	free(thread_ids);
     return 0;
 }
