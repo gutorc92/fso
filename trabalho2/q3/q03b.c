@@ -100,11 +100,13 @@ int main(int argv,char *argc[]) {
 //printf("%d ",r);
 		}
 	}
+	/*
 	printf("Matrix lida do arquivo 1\n");
 	print_matrix(p,columns_p,rows_p);
 	printf("Matrix lida do arquivo 2\n");
 	print_matrix(x,columns_x,rows_x);
 	printf("Matrix resultado\n");
+	*/
 	print_matrix(c,columns_x,rows_p);
 
 	free_matrix(p,columns_p,rows_p);

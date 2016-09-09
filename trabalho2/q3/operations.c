@@ -10,7 +10,12 @@
 int print_matrix(int **p, int columns, int rows){
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){
-			printf("%d ",p[i][j]);
+			if(j + 1 < columns){
+				printf("%d ",p[i][j]);
+			}else{
+				printf("%d",p[i][j]);
+			}
+			
 		}
 		printf("\n");
 	}
@@ -96,7 +101,7 @@ int** read_matrix_from_file(const char *file,int * prows,int * pcolumns){
 		return NULL;
 	}
 	*prows = rows; *pcolumns = columns;
-printf("rows %d columns %d\n",rows,columns);
+//printf("rows %d columns %d\n",rows,columns);
 	int **p = create_matrix(columns,rows);
 	for(int i = 0; i < rows; i++){
 		for(int j = 0; j < columns; j++){

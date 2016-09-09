@@ -61,11 +61,13 @@ int main(int argv, char * argc[]) {
 			c[i][j] = sum;
 		}
 	}
+	/*
 	printf("Matrix from file 1\n");
 	print_matrix(p,columns_p,rows_p);
 	printf("Matrix from file 2\n");
 	print_matrix(x,columns_x,rows_x);
 	printf("Result matrix\n");
+	*/
 	print_matrix(c,columns_x,rows_p);
 
 	free_matrix(p,columns_p,rows_p);
