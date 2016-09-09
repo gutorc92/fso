@@ -17,7 +17,7 @@
 	apenas utilizar o comando:
 		pip install numpy
 
-# Copilar
+# Compilar
 	Para copilar os arquivo é necessário apenas usar o comando make
 
 # Executar
