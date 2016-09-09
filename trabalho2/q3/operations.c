@@ -113,13 +113,13 @@ int** read_matrix_from_file(const char *file,int * prows,int * pcolumns){
 }
 
 int check_args(int *argv, char * argc[]){
-	if(*argv < 3){
+	if(*argv < 4){
 		perror("You should give the two files where the matrixs are.\n");
 		return 1;
 	}
 	FILE *fp;
 	int j = 0;
-	for(int i = 1; i < *argv; i++){
+	for(int i = 2; i < *argv; i++){
 		fp = fopen(argc[i],"r");
 		if (fp!=NULL){ 
 			fclose (fp);

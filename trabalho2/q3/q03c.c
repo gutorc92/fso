@@ -19,7 +19,7 @@
 #include <semaphore.h>
 #include "operations.h"
 #include <unistd.h>
-
+#include <string.h>
 struct plus_params{
 	int **p;
 	int **x;
@@ -53,12 +53,12 @@ int main(int argv,char *argc[]) {
 	int columns_x = 0, rows_x = 0;
 	int **p = NULL; int **x = NULL; int **c = NULL;
 
-	p = read_matrix_from_file(argc[1],&rows_p,&columns_p);
+	p = read_matrix_from_file(argc[2],&rows_p,&columns_p);
 	if(!p){
 		perror("Matrix p not created correctly\n");
 		return -1;
 	}
-	x = read_matrix_from_file(argc[2],&rows_x,&columns_x);
+	x = read_matrix_from_file(argc[3],&rows_x,&columns_x);
 	if(!x){
 		perror("Matrix x not created correctly\n");
 		return -1;
@@ -121,8 +121,12 @@ int main(int argv,char *argc[]) {
 	printf("Matrix resultado\n");
 	*/
 	//print_matrix(c,columns_x,rows_p);
-	gettimeofday(&stop, NULL);
-	printf("took %lu\n", stop.tv_usec - start.tv_usec);
+	if(strcmp(argc[1],"t") == 0){
+		gettimeofday(&stop, NULL);
+		printf("took %lu\n", stop.tv_usec - start.tv_usec);
+	}else{
+		print_matrix(c,columns_x,rows_p);
+	}
 	free_matrix(p,columns_p,rows_p);
 	free_matrix(x,columns_x,rows_x);
 	free_matrix(c,columns_x,rows_p);

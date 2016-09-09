@@ -7,10 +7,10 @@ file1="matrixs/$mat1"
 file2="matrixs/$mat2"
 file3="matrixs/$mat3"
 echo "A implementation"
-./a $file1 $file2 
+./a t $file1 $file2 
 echo "B impelementation"
-./b $file1 $file2
+./b t $file1 $file2
 echo "C impelementation"
-./c $file1 $file2
+./c t $file1 $file2
 
 

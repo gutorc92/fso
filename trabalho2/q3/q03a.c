@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "operations.h"
+#include <string.h>
 //do stuff
 
 int main(int argv, char * argc[]) {
@@ -30,13 +31,13 @@ int main(int argv, char * argc[]) {
 	 
 	
 	
-	p = read_matrix_from_file(argc[1],&rows_p,&columns_p);
+	p = read_matrix_from_file(argc[2],&rows_p,&columns_p);
 
 	if(!p){
 		perror("Matrix p not created correctly\n");
 		return -1;
 	}
-	x = read_matrix_from_file(argc[2],&rows_x,&columns_x);
+	x = read_matrix_from_file(argc[3],&rows_x,&columns_x);
 	if(!x){
 		perror("Matrix x not created correctly\n");
 		return -1;
@@ -70,9 +71,12 @@ int main(int argv, char * argc[]) {
 	print_matrix(x,columns_x,rows_x);
 	printf("Result matrix\n");
 	*/
-	//print_matrix(c,columns_x,rows_p);
-	gettimeofday(&stop, NULL);
-	printf("took %lu\n", stop.tv_usec - start.tv_usec);
+	if(strcmp(argc[1],"t") == 0){
+		gettimeofday(&stop, NULL);
+		printf("took %lu\n", stop.tv_usec - start.tv_usec);
+	}else{
+		print_matrix(c,columns_x,rows_p);
+	}
 	free_matrix(p,columns_p,rows_p);
 	free_matrix(x,columns_x,rows_x);
 	free_matrix(c,columns_x,rows_p);
