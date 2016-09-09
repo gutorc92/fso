@@ -41,7 +41,7 @@ void* plus_matrix(void * arg){
 }
 
 int main(int argv,char *argc[]) {
-
+	gettimeofday(&start, NULL);
 	if(check_args(&argv,argc)){
 		printf("Check stderr for more informations\n");
 		return -1;
@@ -107,8 +107,9 @@ int main(int argv,char *argc[]) {
 	print_matrix(x,columns_x,rows_x);
 	printf("Matrix resultado\n");
 	*/
-	print_matrix(c,columns_x,rows_p);
-
+	//print_matrix(c,columns_x,rows_p);
+	gettimeofday(&stop, NULL);
+	printf("took %lu\n", stop.tv_usec - start.tv_usec);
 	free_matrix(p,columns_p,rows_p);
 	free_matrix(x,columns_x,rows_x);
 	free_matrix(c,columns_x,rows_p);

@@ -1,5 +1,10 @@
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
+#include <sys/time.h>
+
+struct timeval stop, start;
+
+
 
 int print_matrix(int **p, int columns, int rows);
 int** create_matrix(int columns, int rows);
