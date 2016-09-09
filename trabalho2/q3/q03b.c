@@ -35,71 +35,81 @@ void* plus_matrix(void * arg){
 	for(int i = 0; i < params->max; i++){
 		sum += params->p[params->row][i] * params->x[i][params->column];
 	}
-	printf("Sum %d row %d  column %d\n",sum,params->row,params->column);
+//printf("Sum: %d\n",sum);
 	params->c[params->row][params->column] = sum;
 	return NULL;
 }
 
 int main(int argv,char *argc[]) {
 
-	int columns = 3, rows = 3;
-	int **p = NULL;
-	int **x = NULL;
-	int **c = NULL;
-	pthread_t * thread_ids = malloc(sizeof(pthread_t)*columns*rows);
-	plus_params * params = malloc(sizeof(plus_params)*columns*rows);
+	if(check_args(&argv,argc)){
+		printf("Check stderr for more informations\n");
+		return -1;
+	}	
+	int columns_p = 0, rows_p = 0;
+	int columns_x = 0, rows_x = 0;
+	int **p = NULL; int **x = NULL; int **c = NULL;
+
+	p = read_matrix_from_file(argc[1],&rows_p,&columns_p);
+	if(!p){
+		perror("Matrix p not created correctly\n");
+		return -1;
+	}
+	x = read_matrix_from_file(argc[2],&rows_x,&columns_x);
+	if(!x){
+		perror("Matrix x not created correctly\n");
+		return -1;
+	}
+	if(columns_p != rows_x){
+		perror("Columns of p are different of x'rows\n");
+		fprintf(stderr, "The columns of p are: %d and rows of x are %d\n",columns_p,rows_x);
+		return -1;
+	}
+	pthread_t * thread_ids = malloc(sizeof(pthread_t)*columns_x*rows_p);
+	plus_params * params = malloc(sizeof(plus_params)*columns_x*rows_p);
 	if(!thread_ids){
 		perror("Thread nao criada corretamente\n");
 		return 1;
 	}
-	p = create_matrix(columns,rows);
-	if(!p){
-		perror("Matrix p nao foi criada corretamente\n");
-		return 1;
-	}
-	x = create_matrix(columns,rows);
-	if(!x){
-		perror("Matrix x nao foi criada corretamente\n");
-		return 1;
-	}
-	c = create_matrix(columns,rows);
+
+	c = create_matrix(columns_x,rows_p);
 	if(!c){
-		perror("Matrix c nao foi criada corretamente\n");
-		return 1;
+		perror("Matrix c not created correctly\n");
+		return -1;
 	}
-	read_matrix(p,columns,rows,"matrix1");
-	read_matrix(x,columns,rows,"matrix2");
+	//read_matrix(p,columns,rows,"matrix1");
+	//read_matrix(x,columns,rows,"matrix2");
 	
-	for(int i = 0; i < rows; i++){
-		for(int j = 0; j < columns; j++){
-			int id = i*rows+j;
+	for(int i = 0; i < rows_p; i++){
+		for(int j = 0; j < columns_x; j++){
+			int id = i*rows_p+j;
 			plus_params * param = &params[id];
 			param->p = p; 
 			param->x = x; 
 			param->c = c;
-			param->max = 3;
+			param->max = rows_x;
 			param->row = i; 
 			param->column = j; 
 			pthread_create(&thread_ids[id], NULL, &plus_matrix, param);
 			
 		}
 	}
-	for(int i = 0; i < rows; i++){
-		for(int j = 0; j < columns; j++){
-			int r =	pthread_join(thread_ids[i*rows+j], NULL);
-			printf("%d ",r);
+	for(int i = 0; i < rows_p; i++){
+		for(int j = 0; j < columns_x; j++){
+			pthread_join(thread_ids[i*rows_p+j], NULL);
+//printf("%d ",r);
 		}
 	}
 	printf("Matrix lida do arquivo 1\n");
-	print_matrix(p,columns,rows);
+	print_matrix(p,columns_p,rows_p);
 	printf("Matrix lida do arquivo 2\n");
-	print_matrix(x,columns,rows);
+	print_matrix(x,columns_x,rows_x);
 	printf("Matrix resultado\n");
-	print_matrix(c,columns,rows);
+	print_matrix(c,columns_x,rows_p);
 
-	free_matrix(p,columns,rows);
-	free_matrix(x,columns,rows);
-	free_matrix(c,columns,rows);
+	free_matrix(p,columns_p,rows_p);
+	free_matrix(x,columns_x,rows_x);
+	free_matrix(c,columns_x,rows_p);
 	free(thread_ids);
     return 0;
 }

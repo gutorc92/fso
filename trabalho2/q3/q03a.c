@@ -36,7 +36,7 @@ int main(int argv, char * argc[]) {
 	}
 	x = read_matrix_from_file(argc[2],&rows_x,&columns_x);
 	if(!x){
-		perror("Matrix p not created correctly\n");
+		perror("Matrix x not created correctly\n");
 		return -1;
 	}
 	if(columns_p != rows_x){
@@ -46,7 +46,7 @@ int main(int argv, char * argc[]) {
 	}
 	c = create_matrix(columns_x,rows_p);
 	if(!c){
-		perror("Matrix p not created correctly\n");
+		perror("Matrix c not created correctly\n");
 		return -1;
 	}
 	//read_matrix(p,columns,rows,"matrix1");
