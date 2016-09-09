@@ -40,7 +40,7 @@ void* plus_matrix(void * arg){
 	return NULL;
 }
 
-int main(argv,*argc[]) {
+int main(int argv,char *argc[]) {
 
 	int columns = 3, rows = 3;
 	int **p = NULL;

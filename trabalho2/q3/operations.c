@@ -86,3 +86,44 @@ int read_matrix(int **p, int columns, int rows,const char *file){
 	return 1;
 }
 
+int** read_matrix_from_file(const char *file,int * prows,int * pcolumns){
+	FILE *fp;
+	int rows = 0,columns = 0;
+	fp = fopen(file, "r");
+	fscanf(fp,"%d",&rows);
+	fscanf(fp,"%d",&columns);
+	if(rows == 0 && columns == 0){
+		return NULL;
+	}
+	*prows = rows; *pcolumns = columns;
+printf("rows %d columns %d\n",rows,columns);
+	int **p = create_matrix(columns,rows);
+	for(int i = 0; i < rows; i++){
+		for(int j = 0; j < columns; j++){
+			fscanf(fp,"%d",&p[i][j]);
+		}
+	}
+	fclose(fp);
+	return p;
+}
+
+int check_args(int *argv, char * argc[]){
+	if(*argv < 3){
+		perror("You should give the two files where the matrixs are.\n");
+		return 1;
+	}
+	FILE *fp;
+	int j = 0;
+	for(int i = 1; i < *argv; i++){
+		fp = fopen(argc[i],"r");
+		if (fp!=NULL){ 
+			fclose (fp);
+			j++;
+		}
+	}
+	if(j != 2){
+		perror("The programa cannot find the files where the matrixs should be..\n");
+		return 1;
+	}
+	return 0;
+}
