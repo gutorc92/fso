@@ -1,0 +1,19 @@
+#!/bin/sh
+python generate_matriz.py $1 $2
+mat1="matrix$1_$2"
+mat2="matrix$1_$2_2"
+mat3="matrix$1_$2_result"
+file1="matrixs/$mat1"
+file2="matrixs/$mat2"
+file3="matrixs/$mat3"
+echo "A implementation"
+./a g $file1 $file2 > r
+cmp r $file3
+echo "B impelementation"
+./b g $file1 $file2 > r
+cmp r $file3
+echo "C impelementation"
+./c g $file1 $file2 > r
+cmp r $file3
+
+
