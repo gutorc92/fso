@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for((i=3; i<35; i++))
+do
+	./test $i $i
+done
