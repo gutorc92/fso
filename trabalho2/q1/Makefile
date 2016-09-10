@@ -21,7 +21,7 @@ all: $(TARGET)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ -lm
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
 	rm -f $(TARGET) *.o
