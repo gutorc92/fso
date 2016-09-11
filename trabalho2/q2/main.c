@@ -33,8 +33,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-// in fact is 100, but argc comes added with more one, because './main' is an argv
-#define ARRAY_LIMIT 101
+#define ARRAY_LIMIT 100
 
 struct comparator {
 	// array with numbers
@@ -47,75 +46,35 @@ struct comparator {
 	int j;
 };
 
-void* plus_matrix(void * arg){
-	struct comparator * current_comparator = (struct comparator *) arg;
-
-	int index_i = current_comparator->i;
-	int index_j = current_comparator->j;
-
-	if(current_comparator->X[index_i] > current_comparator->X[index_j]) {
-		current_comparator->W[index_j] = 0;
-	} else {
-		current_comparator->W[index_i] = 0;
-	}
-
-	return NULL;
-}
-
-/**
- * This func initiates the W array with passed sequence
- */
-int * init_array(int sequence_size, char * argv[]) {
-	int * sequence = malloc(sizeof(int) * sequence_size);
-
-	for(int count = 0; count < sequence_size; count++) {
-		sequence[count] = atoi(argv[count+1]);
-	}
-
-	return sequence;
-}
-
-/**
- * This func initiates the X array with 1
- */
-int * init_filled_with_one(int sequence_size){
-	int * W = malloc(sizeof(int) * sequence_size);
-
-	for(int count = 0; count < sequence_size; count++) {
-		W[count] = 1;
-	}
-
-	return W;
-}
-
-void validate_arguments(int argc) {
-	if(argc > ARRAY_LIMIT) {
-		printf("Please enter with an max of 100 numbers\n");
-		exit(EXIT_FAILURE);
-	}
-
-	if(argc < 3 ) {
-		printf("You need pass at least two arguments\n");
-		exit(EXIT_FAILURE);
-	}
-}
+void* compare(void * arg);
+int * init_array(int sequence_size, char * argv[]);
+int * init_filled_with_one(int sequence_size);
+void validate_arguments(int array_size);
+void print_current_status(int * X, int * W, int array_size);
 
 int main(int argc, char * argv[]) {
 
-	validate_arguments(argc);
+	// first argument must be size of array
+	int array_size = atoi(argv[1]);
 
-	// because argc comes added with more one, because './main' is an argv
-	int array_size = argc-1;
+	validate_arguments(array_size);
+
+	printf("Number of input values = %d\n", array_size);
 
 	int *X = init_array(array_size, argv);
 	int *W = init_filled_with_one(array_size);
 
-	printf("You pass: \n");
+	printf("Input values X = ");
 
 	for(int i = 0; i < array_size; i++) {
 		printf("%d ",X[i]);
 	}
+	printf("\n");
 
+	printf("After initialization W = ");
+	for(int i = 0; i < array_size; i++) {
+		printf("%d ",W[i]);
+	}
 	printf("\n");
 
 	// combinação 2 a dois
@@ -135,21 +94,92 @@ int main(int argc, char * argv[]) {
 			params.i = i;
 			params.j = j;
 
-			pthread_create(&thread_ids[id], NULL, &plus_matrix, &params);
+			pthread_create(&thread_ids[id], NULL, &compare, &params);
+
 			// join to main thread when terminated
 			pthread_join(thread_ids[id], NULL);
 			id++;
 		}
 	}
 
-	for(int i = 0; i < array_size; i++) {
-		printf("%d ",W[i]);
-	}
-
+	print_current_status(X, W, array_size);
 	printf("\n");
 
 	free(W);
 	free(X);
 
   return 0;
+}
+
+
+void* compare(void * arg) {
+	struct comparator * current_comparator = (struct comparator *) arg;
+
+	int index_i = current_comparator->i;
+	int index_j = current_comparator->j;
+
+	if(current_comparator->X[index_i] > current_comparator->X[index_j]) {
+		printf("Thread T(%d, %d) compares x[%d] and x[%d], and writes 0 into w[%d]\n", index_i, index_j, index_i, index_j, index_j);
+		current_comparator->W[index_j] = 0;
+	} else {
+		current_comparator->W[index_i] = 0;
+	}
+
+	return NULL;
+}
+
+/**
+ * This func initiates the W array with passed sequence
+ */
+int * init_array(int sequence_size, char * argv[]) {
+	int * sequence = malloc(sizeof(int) * sequence_size);
+
+	for(int count = 0; count < sequence_size; count++) {
+		sequence[count] = atoi(argv[count+2]);
+	}
+
+	return sequence;
+}
+
+/**
+ * This func initiates the X array with 1
+ */
+int * init_filled_with_one(int sequence_size) {
+	int * W = malloc(sizeof(int) * sequence_size);
+
+	for(int count = 0; count < sequence_size; count++) {
+		W[count] = 1;
+	}
+
+	return W;
+}
+
+void validate_arguments(int array_size) {
+	if(array_size > ARRAY_LIMIT) {
+		printf("Please enter with an max of 100 numbers\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if(array_size < 2 ) {
+		printf("You need pass at least two arguments\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+void print_current_status(int * X, int * W, int array_size) {
+	printf("After step 2\n");
+
+	printf("W = ");
+	for(int i = 0; i < array_size; i++) {
+		printf("%d ", W[i]);
+	}
+
+	printf("\n");
+
+	for(int i = 0; i < array_size; i++) {
+		if(W[i] == 1) {
+			printf("Maximum = %d\n", X[i]);
+			printf("Location = %d\n", i);
+		}
+	}
 }

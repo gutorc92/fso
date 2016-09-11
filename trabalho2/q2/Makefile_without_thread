@@ -1,4 +1,4 @@
-#
+# To run: make -f Makefile_without_thread
 # Makefile
 #
 
@@ -9,11 +9,11 @@ CFLAGS = -g -Wall --std=c99
 CC=gcc
 
 #Name of the executable file
-TARGET=q2
+TARGET=q2wt
 
 #Files
-PROG1 = main.c
-OBJ = main.o
+PROG1 = without_thread.c
+OBJ = without_thread.o
 
 all: $(TARGET)
 
