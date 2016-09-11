@@ -28,6 +28,8 @@ void handle_sigalrm(int signum);
 int main(void) {
   pid_t pid;
 
+  int pid_of_father = getpid();
+
   /**
    * Quando um sinal é lançado ele irá procurar um handler para executar antes
    * de retornar a execução normalmente. Se essa função:
@@ -52,8 +54,6 @@ int main(void) {
    */
   if(pid == 0 ) {
     printf("Processo filho vai dormir e lançar um sinal. pid = %d\n", getpid());
-
-    int pid_of_father = getpid()-1;
 
     // Dorme por cinco segundos
     sleep(5);

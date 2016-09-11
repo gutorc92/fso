@@ -23,53 +23,74 @@
       todos makefiles, como editor de texto foi utilizado vim e Atom.
       Os tutoriais abaixo só foram testados em distribuições debian.
     </p>
+    <p>
+      Na questão 3 foi utilizada a linguagem Python e uma biblioteca chamada
+      numpy para ajudar na geração de matrizes. No README.md da pasta existe
+      uma descrição de como se instalar a biblioteca.
+    </p>
 
     <h1>Instruções de uso</h1>
 
     <h3>Questão 1</h3>
     <p>
-      Entre na pasta da q1 pelo terminal e execute o comando:
+      Entre na pasta q1 pelo terminal e execute o comando:
       <p class="terminal">$ make</p>
       Seguido de:
-      <p class="terminal">$ ./prog</p>
-      Logo irá aparecer uma tela requisitando pontos no eixo cartesiano. Após
-      digitar todos pontos ele irá te informar se essas coordenadas podem formar
-      um triangulo. Caso forme ele exibe a área desse triangulo e seu perimetro.
+      <p class="terminal">$ ./main</p>
+      O programa irá imprimir o pid dos processos criados, dormir por 5 segundos,
+      sinalizar o disparo de um sinal gerado pelo processo filho, e imprimi-lo
+      na tela quando o processo pai capturar esse sinal. Então o programa irá
+      esperar CTRL+C para finalizar sua execução.
       <br/>
-      Para executar alguns casos de teste definidos, use:
-      <p class="terminal">./prog < test</p>
     </p>
 
     <h3>Questão 2</h3>
     <p>
+      Essa questão é composta por três soluções discutidas no README.md
+      em sua pasta. Abaixo será descrito como executar cada uma.
+    </p>
+    <p>
       Entre na pasta da q2 pelo terminal e execute o comando:
+      <br/><br/>
+      Para o código do executável q2
       <p class="terminal">$ make</p>
-      O executável irá ordenar números passados por argumento em sua execução,
-      para isso execute:
-      <p class="terminal">$ ./prog numero1 numero2 numero3...</p>
-      Para qualquer número inteiro. Você pode usar antes dos números os comandos
-      -d e -r ainda, tal -d a ordem será crescente e -r a
-      ordenação será decrescente.
+      Para o código do executável q2wt
+      <p class="terminal">$ make -f Makefile_without_thread</p>
+      Para o código do executável q2op
+      <p class="terminal">$ make -f Makefile_optimized</p>
       <br/>
+      Agora basta executar seguindo a lógica:
+      <p class="terminal">$ ./q2 n x[0] x[1] x[2]</p>
+      Onde x é um array que representa uma sequência numérica e n é o tamanho
+      desse array.
+      <p>
+        Os resultados dessa questão, bem como outras analises da questão,
+        estão no README.md nessa mesma pasta.
+      </p>
     </p>
 
     <h3>Questão 3</h3>
     <p>
-      Para essa questão foi criado um README que responde as duas perguntas
-      de seu enunciado. Olhar a pasta q3.
       <br/>
       Entre na pasta da q3 pelo terminal e execute o comando:
       <p class="terminal">$ make</p>
-      Em seguida execute:
-      <p class="terminal">$ ./main</p>
-      Primeiramente será impresso algumas linhas, seguidos de requisição de texto,
-      digite algum texto sem espaço, tabulaçao ou quebra de linha e ele ira imprimir
-      o valor de string 2 e depois o seu valor concatenado em outra string.
+      Esse make irá gerar 3 executáveis: a, b e c. Para executa-los use a
+      seguinte lógica:
+      <p class="terminal">$ ./a op matrix1.txt matrixs2.txt</p>
+        Tal que op: t - mostra o tempo de execução, g - mostra a matriz
+        resultante. Os argumentos matrix.txt são 2 arquivos textuais informando
+        a dimensão da matriz na primeira linha e suas células nas
+        linhas seguintes.
+      <p>
+        A execução em t irá exibir um número em microsegundos(10^6).
+        Os resultados e a análise desse experimento está no arquivo README.md
+        nessa mesma pasta q3.
       </br>
+      </p>
     </p>
 
     <h1>Maiores informações</h1>
-    Disciplina de FSO - 2016/2
+    Disciplina de FSO - 2016/2 | Alunos: Phelipe Wener e Gustavo Coelho
     <br>
     Esses arquivos estão sendo versionados em
       <a href="https://github.com/gutorc92/fso">https://github.com/gutorc92/fso</a>
