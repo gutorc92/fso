@@ -130,6 +130,6 @@ user	0m0.000s
 sys	0m0.004s
 ```
 
-O tempo reduziu! Ainda que q2wt seja menor, a diferença de execução com q2 foi menor que 4x. Portanto, apesar de threads paralelizar a execução do código, uma otimização é usar de uma quantidade menor de threads, afim de mensurar quando o tempo de criação de threads otimiza a execução.
+O tempo reduziu! Ainda que q2wt seja menor, a diferença de execução com q2 foi menor que 4x. Portanto, apesar de threads paralelizar a execução do código, uma otimização é usar de uma quantidade menor de threads, afim de ponderar quando o tempo de criação de threads compensa a paralelização.
 
 -Para explicação do código e procedimentos para execução, visualizar a documentation.html na pasta anterior
