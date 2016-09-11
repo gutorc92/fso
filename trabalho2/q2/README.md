@@ -87,7 +87,7 @@ user	0m0.000s
 sys	0m0.000s
 ```
 
-A principio pensamos que por usar de threads o programa naturalmente irá executar mais rápido, porém se pensarmos na quantidade de threads que foram criadas e que isso também é custoso para o sistema, nasce a hipótese que a diferença de discrepante de 10x no programa que usa thread se dá por isso. Para provarmos essa hipotese foi criado um novo programa que aloca menos threads, diferente do primeiro, esse irá alocar uma quantidade de (n-1) threads, tal que cada thread compare um número da sequência com todos os outros. Esse executável se chama q2op(question 2 optimized) e sua execução gerou:
+A principio pensamos que por usar de threads o programa naturalmente irá executar mais rápido, porém se pensarmos na quantidade de threads que foram criadas e que isso também é custoso para o sistema, nasce a hipótese que a diferença de tempo discrepante de 10x no programa que usa thread se dá por isso. Para provarmos essa hipotese foi criado um novo programa que aloca menos threads, diferente do primeiro, esse irá alocar uma quantidade de (n-1) threads, tal que cada thread compare um número da sequência com todos os outros. Esse executável se chama q2op(question 2 optimized) e sua execução gerou:
 
 ```shell
 $ time ./q2op 50 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
