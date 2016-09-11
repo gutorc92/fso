@@ -1,0 +1,27 @@
+#
+# Makefile
+#
+
+#Flags used to compile files
+CFLAGS = -g -Wall --std=c99
+
+#Compile
+CC=gcc
+
+#Name of the executable file
+TARGET=q2op
+
+#Files
+PROG1 = main_optimized.c
+OBJ = main_optimized.o
+
+all: $(TARGET)
+
+%.o: %.c $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ -lpthread
+
+clean:
+	rm -f $(TARGET) *.o
