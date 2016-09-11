@@ -3,7 +3,7 @@
 #
 
 #Flags used to compile files
-CFLAGS = -g -Wall --std=c99 
+CFLAGS = -g -Wall --std=c99
 
 #Compile
 CC=gcc
@@ -21,7 +21,7 @@ all: $(TARGET)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ -lm -lpthread
+	$(CC) $(CFLAGS) -o $@ $^ -lpthread
 
 clean:
 	rm -f $(TARGET) *.o
