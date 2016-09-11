@@ -2,7 +2,7 @@
 	q03a.c - primeira versão requisitada pelo sistema
 	q03b.c - segunda versão requisitada pelo sistema
 	q03c.c - terceira versão requisitada pelo sistema
-	operations.h - funções usadas por todas as respostas 
+	operations.h - funções usadas por todas as respostas
 	operations.c - impelementacão das funções
 	generate_matriz.py - arquivo python para gerar matrizes
 	test - shell script para rodar toas as versões com as mesmas matrizes
@@ -38,19 +38,45 @@
 	declarado.
 
 	O diretório matrixs contém várias matrizes que podem ser usadas
-	para testes manuais. 
-	
+	para testes manuais.
+
 
 # Testes
 	Para executar o arquivo de teste bastar utilizar o comando
 		./test linhas colunas
 
 	O número de linhas e colunas devem ser iguais por razões de implmentação.
-	
+
 	Para verificar o temo levado por cada matriz apenas execute:
 		./test_time linhas colunas
 
 	A restrição de linhas e colunas é valida para esse caso também.
 
-	
-# Resultados
+
+# Questão de analise
+A questão pede 3 programas: a, b e c. Executando todos com entradas de uma mesma matriz 150x150, temos os seguintes resultados:
+
+Para a questão a, executada de forma sequencial:
+
+```shell
+$ ./a t matrixs/matrix150_150 matrixs/matrix150_150
+took 18026
+```
+
+Para a questão b, o qual cada cálculo de multiplicação roda em uma thread, temos:
+
+```shell
+./b t matrixs/matrix150_150 matrixs/matrix150_150
+took 477392
+```
+
+E para a questão c, um número determinado de threads(quantidade de núcleos do processador) deverá ser usado recorrentemente, até que toda multiplicação seja feita:
+
+```shell
+$ ./c t matrixs/matrix150_150 matrixs/matrix150_150
+took 215153
+```
+
+OBS: Esses resultados estão em microsegundos(10^-6).
+
+A solução mais rápida foi a sequencial, solução a. A mais demorada foi a solução b, também a que mais alocou threads. A terceira, solução c, alocou um número menor de threads e foi relativamente bem, perdendo apenas para a solução a. O motivo desses resultados se dá pelo tempo de criação de threads, uma vez que isso é custoso para o sistema, toma um certo tempo de execução, logo não basta criar várias threads esperando que o paralelismo seja um otimizador. A melhor opção se aproxima da solução c, o qual um número menor de threads são criadas a depender da estratégia a ser paralelizada.
