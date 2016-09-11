@@ -1,9 +1,9 @@
-# Número de threads
-No enunciado completo era questionado o número de threads, por que n(n-1)/2 em vez de (n^2). Isso se dá pelo fato de que n^2 iria repetir as comparações, enquanto a primeira formula prevê a comparação entre dois numeros apenas 1 vez.
+# NÃºmero de threads
+No enunciado completo era questionado o nÃºmero de threads, por que n(n-1)/2 em vez de (n^2). Isso se dÃ¡ pelo fato de que n^2 iria repetir as comparaÃ§Ãµes, enquanto a primeira formula prevÃª a comparaÃ§Ã£o entre dois numeros apenas 1 vez.
 
-# Questões de ánalise
-Executando o programa q2, que usa threads temos a seguinte sequência (gerada usando $seq 50, modificando o numero 25 para 100) no console:
-
+# QuestÃµes de Ã¡nalise
+Executando o programa q2, que usa threads temos a seguinte sequÃªncia (gerada usando $seq 50, modificando o numero 25 para 100) no console:
+```shell
 $ time ./q2 50 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
 Number of input values = 50
 Input values X = 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
@@ -42,9 +42,11 @@ Location = 24
 real	0m0.024s
 user	0m0.004s
 sys	0m0.024s
+```
 
-Já para o programa sem threads, q2wt(question 2 without thread), temos:
+JÃ¡ para o programa sem threads, q2wt(question 2 without thread), temos:
 
+```shell
 $ time ./q2wt 50 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
 Number of input values = 50
 Input values X = 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
@@ -83,9 +85,11 @@ Location = 24
 real	0m0.002s
 user	0m0.000s
 sys	0m0.000s
+```
 
-A principio pensamos que por usar de threads o programa naturalmente irá executar mais rápido, porém se pensarmos na quantidade de threads que foram criadas e que isso também é custoso para o sistema, nasce a hipótese que a diferença de discrepante de 10x no programa que usa thread se dá por isso. Para provarmos essa hipotese foi criado um novo programa que aloca menos threads, diferente do primeiro, esse irá alocar uma quantidade de (n-1) threads, tal que cada thread compare um número da sequência com todos os outros. Esse executável se chama q2op(question 2 optimized) e sua execução gerou:
+A principio pensamos que por usar de threads o programa naturalmente irÃ¡ executar mais rÃ¡pido, porÃ©m se pensarmos na quantidade de threads que foram criadas e que isso tambÃ©m Ã© custoso para o sistema, nasce a hipÃ³tese que a diferenÃ§a de discrepante de 10x no programa que usa thread se dÃ¡ por isso. Para provarmos essa hipotese foi criado um novo programa que aloca menos threads, diferente do primeiro, esse irÃ¡ alocar uma quantidade de (n-1) threads, tal que cada thread compare um nÃºmero da sequÃªncia com todos os outros. Esse executÃ¡vel se chama q2op(question 2 optimized) e sua execuÃ§Ã£o gerou:
 
+```shell
 $ time ./q2op 50 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
 Number of input values = 50
 Input values X = 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 100 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
@@ -124,7 +128,8 @@ Location = 24
 real	0m0.005s
 user	0m0.000s
 sys	0m0.004s
+```
 
-O tempo reduziu! Ainda que q2wt seja menor, a diferença de execução com q2 foi menor que 4x. Portanto, apesar de threads paralelizar a execução do código, uma otimização é usar de uma quantidade menor de threads, afim de mensurar quando o tempo de criação de threads otimiza a execução.
+O tempo reduziu! Ainda que q2wt seja menor, a diferenÃ§a de execuÃ§Ã£o com q2 foi menor que 4x. Portanto, apesar de threads paralelizar a execuÃ§Ã£o do cÃ³digo, uma otimizaÃ§Ã£o Ã© usar de uma quantidade menor de threads, afim de mensurar quando o tempo de criaÃ§Ã£o de threads otimiza a execuÃ§Ã£o.
 
--Para explicação do código e procedimentos para execução, visualizar a documentation.html na pasta anterior
+-Para explicaÃ§Ã£o do cÃ³digo e procedimentos para execuÃ§Ã£o, visualizar a documentation.html na pasta anterior
