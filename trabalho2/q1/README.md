@@ -1,8 +1,6 @@
-## Observações
-Para lançar o SIGALRM foi utilizado a função kill(2), responsável por mandar
-um sinal para outro processo. Outras funções como alarm(void) lançam um SIGALRM,
-porém apenas para o processo corrente, além do que, na documentação há recomendação
-para não se utilizar ele com sleep(int sec), outra função utilizada na questão.
+## ObservaÃ§Ãµes
+Para lanÃ§ar o SIGALRM foi utilizado a funÃ§Ã£o kill(2), responsÃ¡vel por mandar um sinal para outro processo. Outras funÃ§Ãµes como alarm(void) lanÃ§am um SIGALRM, porÃ©m apenas para o processo corrente, alÃ©m do que, na documentaÃ§Ã£o hÃ¡ recomendaÃ§Ã£o para nÃ£o se utilizar ele com sleep(int sec), outra funÃ§Ã£o utilizada na questÃ£o.
 
--Para explicação do código, visualizar a documentation.html na pasta anterior
--Ver também o tópico de sinais do Advanced Linux Programming
+-Para explicaÃ§Ã£o do cÃ³digo, visualizar a documentation.html na pasta anterior
+
+-Ver tambÃ©m o tÃ³pico de sinais do Advanced Linux Programming
