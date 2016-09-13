@@ -46,23 +46,42 @@ struct comparator {
 	int j;
 };
 
-void* compare(void * arg);
+struct filler {
+	int position;
+	int *W;
+};
+
+void * compare(void * arg);
 int * init_array(int sequence_size, char * argv[]);
-int * init_filled_with_one(int sequence_size);
+void * init_filled_with_one(void * arg);
 void validate_arguments(int array_size);
 void print_current_status(int * X, int * W, int array_size);
 
 int main(int argc, char * argv[]) {
 
+	validate_arguments(argc);
+
 	// first argument must be size of array
 	int array_size = atoi(argv[1]);
-
-	validate_arguments(array_size);
 
 	printf("Number of input values = %d\n", array_size);
 
 	int *X = init_array(array_size, argv);
-	int *W = init_filled_with_one(array_size);
+	int *W = malloc(sizeof(int) * array_size);
+
+	pthread_t *wthreads_id = malloc(sizeof(pthread_t)*array_size);
+
+	int id = 0;
+
+	for(int position = 0; position < array_size; position++) {
+		struct filler f;
+		f.W = W;
+		f.position = position;
+		pthread_create(&wthreads_id[id], NULL, &init_filled_with_one, &f);
+		// join to main thread when terminated
+		pthread_join(wthreads_id[id], NULL);
+		id++;
+	}
 
 	printf("Input values X = ");
 
@@ -82,7 +101,7 @@ int main(int argc, char * argv[]) {
 
 	pthread_t *thread_ids = malloc(sizeof(pthread_t)*nr_threds);
 
-	int id = 0;
+	id = 0;
 
 	for(int i = 0; i < array_size-1; i++) {
 		// i+1 para que nao se compare com ele mesmo
@@ -112,7 +131,7 @@ int main(int argc, char * argv[]) {
 }
 
 
-void* compare(void * arg) {
+void * compare(void * arg) {
 	struct comparator * current_comparator = (struct comparator *) arg;
 
 	int index_i = current_comparator->i;
@@ -142,16 +161,14 @@ int * init_array(int sequence_size, char * argv[]) {
 }
 
 /**
- * This func initiates the X array with 1
+ * This func initiates the X array with 1. Called by thread
  */
-int * init_filled_with_one(int sequence_size) {
-	int * W = malloc(sizeof(int) * sequence_size);
+void * init_filled_with_one(void * arg) {
+	struct filler * f = (struct filler*) arg;
 
-	for(int count = 0; count < sequence_size; count++) {
-		W[count] = 1;
-	}
+	f->W[f->position] = 1;
 
-	return W;
+	return NULL;
 }
 
 void validate_arguments(int array_size) {
@@ -160,7 +177,7 @@ void validate_arguments(int array_size) {
 		exit(EXIT_FAILURE);
 	}
 
-	if(array_size < 2 ) {
+	if(array_size < 3 ) {
 		printf("You need pass at least two arguments\n");
 		exit(EXIT_FAILURE);
 	}
