@@ -1,5 +1,5 @@
 # Número de threads
-No enunciado completo era questionado o número de threads, por que n(n-1)/2 em vez de (n^2). Isso se dá pelo fato de que n^2 iria repetir as comparações, enquanto a primeira formula prevê a comparação entre dois numeros apenas 1 vez.
+No enunciado completo era questionado o número de threads, por que n(n-1)/2 em vez de (n^2). Isso se dá pelo fato de que n^2 iria repetir as comparações, enquanto a primeira formula prevê a comparação entre dois numeros apenas 1 vez. Essa mesma formula pode ser achada com analise combinatória, combinações de 2 a 2: n!/2(n-2)!
 
 # Questões de ánalise
 Executando o programa q2, que usa threads temos a seguinte sequência (gerada usando $seq 50, modificando o numero 25 para 100) no console:
@@ -132,4 +132,4 @@ sys	0m0.004s
 
 O tempo reduziu! Ainda que q2wt seja menor, a diferença de execução com q2 foi menor que 4x. Portanto, apesar de threads paralelizar a execução do código, uma otimização viável é usar de uma quantidade menor de threads, afim de ponderar quando o tempo de criação de threads compensa a paralelização.
 
--Para explicação do código e procedimentos para execução, visualizar a documentation.html na pasta anterior
+-Para explicação de procedimentos para execução, visualizar a documentation.html na pasta anterior

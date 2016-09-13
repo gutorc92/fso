@@ -82,4 +82,4 @@ OBS: Esses resultados estão em microsegundos(10^-6).
 A solução mais rápida foi a sequencial, solução a. A mais demorada foi a solução b, também a que mais alocou threads. A terceira, solução c, alocou um número menor de threads e foi relativamente bem, perdendo apenas para a solução a. O motivo desses resultados se dá pelo tempo de gerenciamento de threads, uma vez que isso é custoso para o sistema, toma um certo tempo de execução, logo não basta criar várias threads esperando que o paralelismo seja um otimizador. A melhor opção se aproxima da solução c, o qual um número menor de threads são criadas a depender da estratégia a ser paralelizada.
 
 
--Para explicação do código e procedimentos para execução, visualizar a documentation.html na pasta anterior
+-Para explicação dos procedimentos para execução, visualizar a documentation.html na pasta anterior
