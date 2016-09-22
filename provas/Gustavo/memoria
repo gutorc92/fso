@@ -1,0 +1,29 @@
+Esse capitulo trata do principal desafio do sistema operacional: 
+gerenciamento de memória. 
+
+A memoria pode ser alocada de diferentes modos, o primeiro deles e o mais 
+simples é dividir a memória em blocos de tamanho igual e carregar um 
+processo em cada um desses blocos. Essa solução é simples porém ineficiente
+e não é mais utilizada em sistemas operacionais modernos. 
+
+A segunda forma vista é a divisão da memória em espaços adequados para cada
+processo. A memória então é dividia em espaços de tamanhos diferentes o SO
+deve então escolher na pilha de processos um que caiba em algum espaços de 
+memoria disponível. A complexidade de gerenciamento para o SO aumento nessa
+abordagem pois é necessário saber quais espaços estão livres e quais 
+estão ocupados e qual processo pode ser carregado na memoria principal. 
+Para se resolver o problema de qual processo alocar três estrategias podem ser 
+utilizadas: primeiro espaços livre, melhor possível,pior possível. Na primeira 
+estrategia o SO aloca o processo no primeiro espaços livre com espaços suficiente
+para o processo. Na segunda o SO percorre toda a memoria e escolhe o melhor
+espaços - por exemplo, se o processo requer 19kb e há três espaços livres
+com 30,40,50,20 kb o SO irá escolher o ultimo. Na ultima estrategia o SO iria
+escolher o terceiro espaços com 50 kb. A abordagem de divisão de memoria cria
+um problema chamado fragmentação que consiste em espaços não grandes suficientes
+entre processos alocados para os novos processos. A quantidade livre entre
+blocos pode ser suficiente para um novo processo mas esse teria que ter
+endereços físicos não contínuos. As técnicas de paginação e segmentação
+tenta implementar essa solução.
+
+  
+
