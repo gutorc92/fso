@@ -7,7 +7,7 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
-
+#include "operations.h"
 
 
 void error(const char *msg)
@@ -52,9 +52,10 @@ int main(int argc, char *argv[])
 	 do{
 		bzero(buffer,256);
 		n = read(newsockfd,buffer,255);
-		strncpy(method,buffer,3);		
 		if (n < 0) error("ERROR reading from socket");
-		printf("%s\n",method);
+		request r;
+		read_request(&r,buffer);
+		printf("onde sera o erro?\n");
 	 }while(n>0);
 
      n = write(newsockfd,"I got your message",18);

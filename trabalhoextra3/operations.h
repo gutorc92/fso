@@ -17,7 +17,7 @@ int position(char * values, char * element);
 
 int next_space(char * str, int begin);
 
-int read_request(request *r,char buffer);
+int read_request(request *r,char * buffer);
 
 regex_t * create_regex(const char * regex);
 

@@ -13,16 +13,17 @@
 
 int main(int argc, char *argv[]){
 	
-	const char regex[] = ".*";
+	const char regex[] = "(\\S+)\\s(\\S+)\\s(\\S+)";
 	regex_t * re = create_regex(&regex);
-	regmatch_t matches[4];
+	regmatch_t matches[10];
 	char word[81];
 	char text[] = "GET /gustavo/Documents/file.txt HTTP/1.0";
 	int numchars = 0;
 	int result = regexec(re,text,10,matches,0);
 	if(!result){
 		printf("Match");
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 10; i++){
+			printf("Comeco: %d\n",(int)matches[i].rm_so);
 			if((int)matches[i].rm_so < 0) break;
 			numchars = (int)matches[i].rm_eo - (int)matches[i].rm_so;
 			strncpy(word,text+matches[i].rm_so,numchars);
