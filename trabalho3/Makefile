@@ -5,13 +5,13 @@
 #Flags used to compile files
 CFLAGS = -g -Wall --std=c99
 CURRENT_DIR = $(shell pwd)
-SHAREDFLAGS = -lm -L. lprimo -WL,-rpath,$(CURRENT_DIR)
+SHAREDFLAGS = -lprimo -lm -L. -Wl,-rpath,$(CURRENT_DIR)
 
 #Compile
 CC=gcc
 
 TARGET=prog
-TARGET2=pro2
+TARGET2=prog2
 
 #Files
 PROG1 = main.c
@@ -23,28 +23,21 @@ OBJL= libprimo.o
 OBJL2= libprimosh.o
 SHARED=libprimo.so
 
-all: $(TARGET)  clear
+all: $(TARGET) $(TARGET2)  clear
 
-$(OBJL) : $(LIB) $(DEPS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(TARGET):
+	$(CC) $(CFLAGS) -c -o libprimo.o libprimo.c
+	$(CC) $(CFLAGS) -c -o main.o main.c
+	$(CC) $(CFLAGS) -o $(TARGET) main.o libprimo.o -lm
+	rm *.o
 
-$(TARGET): $(OBJ1) $(OBJL)
-	$(CC) $(CFLAGS) -o $@ $^ 
-
-$(OBJ1) :  $(PROG1)
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-$(OBJL2) : $(LIB)
-	$(CC) $(CFLAGS) -c -fPIC $@ $<
-
-$(SHARED):
-	$(CC) -shared -fPIC -o $(SHARED) $(OBJL2)
-
-$(TARGET2): $(OBJ1) $(SHARED)
-	$(CC) $(CFLAGS) $(SHAREDFLAGS) -o $@ $^
+$(TARGET2):
+	$(CC) -c -std=c99 -fPIC libprimo.c
+	$(CC) -shared -fPIC -o libprimo.so libprimo.o
+	$(CC) $(CFLAGS) -o $(TARGET2) main.c libprimo.o -lprimo $(SHAREDFLAGS)	 
 
 clear:
-	rm -f *.o
+	rm -f *.o 
 
 clean:
-	rm -f $(TARGET)  *.o
+	rm -f $(TARGET) $(TARGET2)  *.o *.so
