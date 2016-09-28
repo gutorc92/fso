@@ -25,4 +25,15 @@ $ gcc -o main main.c libprimo.o -lm -std=c99 -L. -lprimo -Wl,-rpath,/home/kuwene
 
 Para rodar os procedimentos acima, basta usar:
 
-$ Make -f MakefileShared
+$ make
+
+Dois programas serão gerados prog e prog2, o primeiro não utiliza bibliotecas 
+dinâmicas e o segundo que as utiliza. 
+
+Para verificar se o arquivo prog2 realmente foi copilado com a biblioteca de 
+forma dinâmica basta usar o comando:
+
+$ ldd prog2
+
+O comando ldd irá mostrar todas as bibliotecas atreladas ao arquivo, exibindo
+assim a biblioteca libprimo.so. 
