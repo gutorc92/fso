@@ -22,9 +22,12 @@ OBJ2 = server.o
 PROG3 = test.c
 OBJ3 = test.o
 
-DEPS= operations.h
-LIB= operations.c
-OBJL= operations.o
+DEPS     = operations.h
+DEPS2    = fserver.h
+LIB      = operations.c 
+OBJL     = operations.o
+LIB2     = fserver.c 
+OBJL2    = fserver.o
 
 
 
@@ -32,6 +35,9 @@ OBJL= operations.o
 all: $(TARGET) $(TARGET2)  clear
 
 $(OBJL) : $(LIB) $(DEPS)
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJL2) : $(LIB2) $(DEPS2)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJ1) : $(PROG1)
@@ -43,7 +49,7 @@ $(TARGET): $(OBJ1) $(OBJL)
 $(OBJ2) :  $(PROG2)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(TARGET2): $(OBJ2) $(OBJL)
+$(TARGET2): $(OBJ2) $(OBJL) $(OBJL2)
 	$(CC) $(CFLAGS) -o $@ $^ -lm 
 
 $(OBJ3) :  $(PROG3)

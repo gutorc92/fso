@@ -3,30 +3,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 #include <unistd.h>
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include "operations.h"
+#include "fserver.h"
 
 
-void error(const char *msg)
-{
-    perror(msg);
-    exit(1);
-}
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
      int sockfd, newsockfd, portno;
      socklen_t clilen;
      char buffer[256];
      struct sockaddr_in serv_addr, cli_addr;
      int n;
-     if (argc < 2) {
-         fprintf(stderr,"ERROR, no port provided\n");
-         exit(1);
-     }
+     if (!check_args(&argc)) exit(1);
      sockfd = socket(AF_INET, SOCK_STREAM, 0);
      if (sockfd < 0) 
         error("ERROR opening socket");
@@ -45,17 +37,17 @@ int main(int argc, char *argv[])
                  &clilen);
      if (newsockfd < 0) 
           error("ERROR on accept");
-	 char * method = malloc(sizeof(char)*3);
-	 if(method == NULL){
-		return 1;
-	 }
+	 
 	 do{
 		bzero(buffer,256);
 		n = read(newsockfd,buffer,255);
 		if (n < 0) error("ERROR reading from socket");
 		request r;
 		read_request(&r,buffer);
-		printf("onde sera o erro?\n");
+		print_request(&r);
+		if(check_request(&r)){
+			printf("It is going to resolve the request\n");
+		}
 	 }while(n>0);
 
      n = write(newsockfd,"I got your message",18);

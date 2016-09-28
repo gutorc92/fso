@@ -15,6 +15,7 @@ int main(int argc, char *argv[]){
 	
 	const char regex[] = "(\\S+)\\s(\\S+)\\s(\\S+)";
 	regex_t * re = create_regex(&regex);
+	request r;
 	regmatch_t matches[10];
 	char word[81];
 	char text[] = "GET /gustavo/Documents/file.txt HTTP/1.0";
@@ -30,10 +31,13 @@ int main(int argc, char *argv[]){
             word[numchars] = '\0';
 			printf("From %d to %d (%s)\n",(int)matches[i].rm_so,
 					(int)matches[i].rm_eo,word);
+			read_params_request(i,numchars, text+matches[i].rm_so,&r);
 		}
 	}else{
 		printf("It does not match anything\n");
 	}
+	print_request(&r);
+	printf("O resultado %d\n",check_request(&r));
 	free(re);
 	return 0; 
 }
