@@ -12,6 +12,9 @@
 
 int (*gera_primo)();
 
+/**
+ * Gera cinco números primos, um a cada segundo
+ */
 int main() {
 	void* lib = dlopen("./libprimo.so", RTLD_LAZY);
 	gera_primo = dlsym(lib,"gera_primo");

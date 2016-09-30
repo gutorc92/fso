@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- Abra esse arquivo utilizando qualquer navegador -->
+<html lang="pt-br">
+  <head>
+    <title>FSO documentação</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta http-equiv="Content-Language" content="pt-br">
+    <style>
+      .terminal {
+        background: #000;
+        color: #FFF;
+        font-weight: bold;
+        padding: 10px;
+        width: 75%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sistema operacional e ambiente</h1>
+    <p>
+      Foi utilizado distribuições linux pelos dois alunos, especificamente
+      o SO debian. Para compilação do código foi utilizado gcc, tal como consta
+      todos makefiles, como editor de texto foi utilizado vim e Atom.
+      Os tutoriais abaixo só foram testados em distribuições debian.
+    </p>
+    <h1>Instruções de uso</h1>
+
+    <p>
+      A diretiva -fPIC do gcc é responsável por tornar os códigos da biblioteca
+      dinâmica independente de um endereço ou posição que é carregada.
+    </p>
+
+    <p class="terminal">$ gcc -c -fPIC libprimo.c </p>
+
+    <p>
+      Agora que temos nosso código objeto como necessário para criação de biblioteca dinâmica, usaremos:
+    </p>
+
+    <p class="terminal">$ gcc -shared -fPIC -o libprimo.so libprimo.o</p>
+
+    <p>
+      Serão combinados os arquivo '.o' que irão gerar libprimo.so.
+      Se esse arquivo de extensão .so for colocado em /usr/lib no Linux, então bastaria rodar:
+    </p>
+
+    <p class="terminal">$ gcc -o main main.c libprimo.o -lm -std=c99 -L. -lprimo</p>
+
+    <p>
+      Porém para rodar na pasta local, deve-se usar a diretiva -Wl,-rpath, (directory), como:
+    </p>
+
+    <p class="terminal">
+      $ gcc -o main main.c libprimo.o -lm -std=c99 -L. -lprimo -Wl,-rpath,/home/kuwener/workspaces/C/fso/trabalho3
+    </p>
+
+    <p>
+      Para rodar os procedimentos acima, na pasta presente basta utilizar:
+    </p>
+
+    <p class="terminal">$ make</p>
+
+    <p>
+      Dois programas serão gerados prog, prog2 e prog3, o primeiro utiliza a biblioteca estaticamente,
+      o segundo e o terceiro utiliza dinâmicamente. Tal que prog2 utiliza o código main.c e prog3
+      utiliza main3.c.
+
+      Para verificar se o arquivo prog2 realmente foi copilado com a biblioteca de
+      forma dinâmica basta usar o comando:
+    </p>
+
+    <p class="terminal">$ ldd prog2</p>
+
+    <p>
+      O comando ldd irá mostrar todas as bibliotecas atreladas ao arquivo, exibindo
+      assim a biblioteca libprimo.so.
+    </p>
+
+    <h1>Maiores informações</h1>
+    <p>
+      Veja algumas analises do codigo em README.md
+    </p>
+    Disciplina de FSO - 2016/2 | Alunos: Phelipe Wener e Gustavo Coelho
+    <br>
+    Esses arquivos estão sendo versionados em
+      <a href="https://github.com/gutorc92/fso">https://github.com/gutorc92/fso</a>
+  </body>
+</html>

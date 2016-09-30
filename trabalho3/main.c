@@ -9,6 +9,9 @@
 #include <unistd.h>
 #include "libprimo.h"
 
+/**
+ * Gera cinco números primos, um a cada segundo
+ */
 int main() {
 	for(int count = 0; count < 5; count++) {
 		int prime = gera_primo();
