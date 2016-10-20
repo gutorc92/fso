@@ -10,7 +10,7 @@
 
 ## Registradores base e limit
 
-Um par de registradores base e limit, podem ser usados para endereçar um um espaço lógico, onde base define a menor unidade de espaço físico de endereço memória  e o registrador limit define o tamanho do comprimento.   
+Um par de registradores base e limit, podem ser usados para endereçar um espaço lógico, onde base define a menor unidade de espaço físico de endereço memória  e o registrador limit define o tamanho do comprimento.   
 
 Para proteção da memória, existe um hardware que compara cada endereço gerado no modo usuário com os registradores. Qualquer tentativa de um programa em execução do modo de usuário, de acessar a memória do sistema operacional, ou de outro usuário, resulta em um erro capturado pelo sistema operacional, que previne acesso afim de impedir que o codigo ou as estruturas de dados de outro usuário ou do sistema operacional sejam modificados.
 
@@ -66,7 +66,7 @@ Em um modelo de partição variável, toda a memória está livre e é considera
 
 Quando um processo entra no sistema ele é colocado na fila de entradas. Então o sistema operacional visualiza quanto existe de memória disponível e quanto é requisitado para um processo ser executado. Facilmente, o sistema coloca cada processo em um hole, até que um processo requisitado não tenha um bloco de memória(hole) grande o suficiente. Então o sistema operacional espera por um hole, ou procura um próximo processo que pode ocupar os espaços disponível.
 
-De modo geral, uma memória é uma coleção de holes de diversos tamanhos. Quando um processo tem sua vez e precisa de memória, o sistema procura por uma hole de tamanho equivalente ao requisitado. Se o hole é muito grande, ele é dividido em duas partes, uma é alocada para o processo a outra volta para o conjunto de holes. Esse procedimento é uma instance particular de se resolver problemas de alocação dinâmica de memória. Existem muitas soluções, algumas estratégias são: First fit, Best fit and Worst fit.  
+De modo geral, uma memória é uma coleção de holes de diversos tamanhos. Quando um processo tem sua vez e precisa de memória, o sistema procura por uma hole de tamanho equivalente ao requisitado. Se o hole é muito grande, ele é dividido em duas partes, uma é alocada para o processo a outra volta para o conjunto de holes. Esse procedimento é uma instancia particular de se resolver problemas de alocação dinâmica de memória. Existem muitas soluções, algumas estratégias são: First fit, Best fit and Worst fit.  
 
 - First fit
 Procura por um hole grande o suficiente a partir do inicio dos blocos, assim que encontra um hole suficientemente grande, para a procura.
@@ -79,7 +79,7 @@ Aloca o mais largo hole, está estratégia deixa a maior quantidade de sobra. De
 
 ## Fragmentação
 
-Ambas, first-fit e best-fit sofrem de fragmentação externa. Nessas estratégias, quando um hole é liberado o espaço de memória é quebrado em várias partes, em algum tempo haverá memória continuada disponível, mas ela estará fragmentada e não poderá ser usada. Isso é um problema grave, chamado de fragmentação externa. Uma solução para isso é permitir que o espaço de endereço lógico não seja contiguo, alocando memória de acordo com o que estiver disponível. Duas técnicas complementares é a paginação e segmentação.
+Ambas, first-fit e best-fit sofrem de fragmentação externa. Nessas estratégias, quando um hole é liberado o espaço de memória é quebrado em várias partes, em algum tempo haverá memória disponível, mas ela estará fragmentada e não poderá ser usada. Isso é um problema grave, chamado de fragmentação externa. Uma solução para isso é permitir que o espaço de endereço lógico não seja contiguo, alocando memória de acordo com o que estiver disponível. Duas técnicas complementares é a paginação e segmentação.
 
 ## Compactação
 
@@ -97,7 +97,7 @@ O metodo básico de paginação consiste em dividir a memória física em blocos
 
 Cada endereço gerado pela CPU é dividido em numero de página e deslocamento de página. O número da página é usado na tabela de páginas como um indice. A tabela de páginas contem o endereco de cada página na memória física. Logo, o numero da página combinado com o deslocamento da pagina define o endereço que é enviado para a unidade de memória.
 
-Tanto o tamanho da página quanto o tamanho do quadro é definido pelo hardware. O tamanho da página é tipicamente uma potência de 2, variando dentre 512bytes e 16 megas por página a depender da arquitetura do computador. Isso facilita a tradução do endereçamento logico. Se o tamanho do endereço lógico é 2^m e o tamanho da página é 2^n unidades de endereçamento, então o número da página está na ordem da diferença de m-n, enquanto n é o deslocamento da página. Exemplo:
+Tanto o tamanho da página quanto o tamanho do quadro é definido pelo hardware. O tamanho da página é tipicamente uma potência de 2, variando dentre 512bytes e 16 megas por página a depender da arquitetura do computador. Isso facilita a tradução do endereçamento lógico. Se o tamanho do endereço lógico é 2^m e o tamanho da página é 2^n unidades de endereçamento, então o número da página está na ordem da diferença de m-n, enquanto n é o deslocamento da página. Exemplo:
 
 Para um endereço lógico com n=2 e m=4, usando um tamanho de página de 4 bytes e uma memória física de 32bytes(8 paginas, 32/4). Endereço lógico 0 é dá página 0, deslocamento 0. Arquivado na página da tabela, encontramos que a página 0 está no quadro 5. Logo, endereço lógico 0 é mapeado para o endereço físico 20(5x4+0). Portanto o endereço lógico 3(pagina 0, deslocamento 3) será mapeado para o endereço físico 23((5x4)+3). Agora para um Endereço lógico 4 que está na pagina 1 com deslocamento 0. Para a tabela de pagina, pagina 1 está mapeada para o frame 6. Assim, o endereço lógico 4 mapeado para o endereço físico 24(6x4 + 0). (Ver figura 7.9, pagina 293)
 
@@ -107,30 +107,30 @@ Se o tamanho de um processo é indepenpendente do tamanho da pagina, é esperado
 
 Quando um processo surge para ser executado, seu tamanho expresso em paginas é examinado, cada página de um processo precisa de um frame. Se ele precisar de n paginas, n frames devem estar disponiveis. Caso estejam isso é alocado para o processo. A primeira página de um processo é carregada em um dos frames alocados e o número de frames é colocado na tabela de páginas de um processo. Um importante aspecto disso, é que para a visão do usuário temos um único espaço de memória que contém o programa, enquanto de fato o programa está espalhado por toda memória física. Essa diferença é relacionada através de um hardware que faz tradução de endereçamento. O endereço lógico é traduzido para endereço físico. Esse mapeamento é escondido do usuário sendo ele controlado pelo sistema operacional.
 
-O sistema operacional quando gerenciador da memória deve infomara alguns detalhes da memória física: quais frames são alocados, quais estão dispníveis, etc.  Essas informações costumam estar em uma estrutura de dados chamada de tabela de frames.
+O sistema operacional quando gerenciador da memória deve infomar alguns detalhes da memória física: quais frames são alocados, quais estão disponíveis, etc.  Essas informações costumam estar em uma estrutura de dados chamada de tabela de frames.
 
-Além do mais, o sistema operacional deve ser informado sobre o espaço de usuário usado em um processo, para que toda memória lógica possa ser mapeada para produzir memória física. Se um usuário faz uma chamada de sistema(I/O por exemplo) e prove um parametro como um buffer ou instancia, o endereço deve ser mapeado para produzir um endereço físico correto.
+Além do mais, o sistema operacional deve ser informado sobre o espaço de usuário usado em um processo, para que toda memória lógica possa ser mapeada para produzir memória física. Se um usuário faz uma chamada de sistema(I/O por exemplo) e prove um parâmetro como um buffer ou instância, o endereço deve ser mapeado para produzir um endereço físico correto.
 
 ## Suporte de hardware
 
 O hardware da tabela de pagina pode ser feito de diversas maneiras. Em um caso simples, a tabela de página é implementada como uma coleção de registradores dedicados. O motivo para isso ser feito usando registradores é para que a tradução de endereçamento de paginas seja eficiente.
 
-Para arquiteturas cujo a tabela de páginas é razoavelmente pequena(256 entries), o uso de registradores é sucificiente. Mas a maioria dos  computadores modernos usam muito além disso(1 milhão). Para essas máquinas o uso de registradores base de tabela de páginação(PTBR) de pontos de tabela de paginação. Mudando a tabela de paginas requer a mudança apenas desse único registrador, aumentando substancialmente o tempo de troca de contexto.
+Para arquiteturas cujo a tabela de páginas é razoavelmente pequena(256 entradas), o uso de registradores é sucificiente. Mas a maioria dos  computadores modernos usam muito além disso(1 milhão). Para essas máquinas o uso de registradores base de tabela de páginação(PTBR) de pontos de tabela de paginação. Mudando a tabela de paginas requer a mudança apenas desse único registrador, aumentando substancialmente o tempo de troca de contexto.
 
-O problema com essa abordagem é o tempo requisitado para acessar a localização da memória, que pode ser medido por um fator de 2. Esse atraso pode ser intolerável em muitas circunstâncias. A solução para esse problema é sar o cache especial chamado de TLB, buffer de tradução olhe para o lado. O TLB é associativo, de rápida memória. Cada entrada do TLB consiste em duas partes. Uma chave e um valor. Quando a memória apresentada com o item é comparada com todas as chaves simultaneamente. Se nenhum item é localizado, o correspondente campo é retornado.
+O problema com essa abordagem é o tempo requisitado para acessar a localização da memória, que pode ser medido por um fator de 2. Esse atraso pode ser intolerável em muitas circunstâncias. A solução para esse problema é usar o cache especial chamado de TLB, buffer de tradução olhe para o lado. O TLB é associativo, de rápida memória. Cada entrada do TLB consiste em duas partes. Uma chave e um valor. Quando a memória apresentada com o item é comparada com todas as chaves simultaneamente. Se nenhum item é localizado, o correspondente campo é retornado.
 
 A porcentagem de número de páginas  que são encontradas no TLB é chamada de hit ratio. Existe uma probabilidade de 80 por cento de encontrar uma página no TLB, 20 por cento de ser necessário pega-la na memória. Para o acesso no TLB é gasto em torno de 120 nanosec e 220 nanosec para pega-la na memória. Para achar o tempo efetivo de acesso a memória podemos fazer:
 
 effective access time = 0.80 x 120 + 0.20 x 220
 
-## Protection
+## Proteção
 
 Proteção de memória num ambiente paginado é acompanhado pela proteção de bits associada a cada frame. Nós podemos criar hardware para prover proteção de apenas leitura, apenas escrita ou apenas execução. Tentativas ilegais vão ser capturadas pelo sistema operacional. Um bit adicional é geralmente usado como entrada na tabela de paginas como um valido-invalido bit. O sistema operacional configura esse bit para cada processo seguir ou não seguir o acesso a uma página.
 
-## Shared Pages
+## Paginas compartilhadas
 Uma vantagem da paginação é a possibilidade de compartilhar código. Vários processsos podem executar o mesmo código ao mesmo tempo, uma vez que o código para um processo não muda em tempo de execução. Cada processo mantém uma cópia de registradores e dados de armazenamento para guardar os dados de execução do processo.
 
-Para um programa em execução sendo executado por diversos processos de usuário, apenas uma copia é mantida em memória física, enquanto cada pagin de dado, referente aos processos, são mantidos em quadros de memória diferentes. A natureza de apenas-leitura deve ser mantida para que o codigo permaneça correto. O sistema operacional pode apoiar essa propriedade.
+Para um programa em execução sendo executado por diversos processos de usuário, apenas uma cópia é mantida em memória física, enquanto cada pagin de dado, referente aos processos, são mantidos em quadros de memória diferentes. A natureza de apenas-leitura deve ser mantida para que o código permaneça correto. O sistema operacional pode apoiar essa propriedade.
 
 ## Estrutura da tabela de paginas
 O tamanho típico de uma página é de 4 KiB. Assim, para um espaço de endereçamento de 32 bits, cada processo tem acesso a 4 GiB de memória virtual, o que corresponde a 1 MB de páginas de memória. Como normalmente cada entrada tem 4B de tamanho (32 bits), cada processo teria uma tabela de 4MiB de tamanho. Dado o elevado número de processos que correm simultaneamente num sistema, rapidamente uma significativa parte da memória serviria apenas para tabelas de páginas, ao invés da informação propriamente dita(WIKIPEDIA^).
