@@ -61,7 +61,7 @@ void create_backup(char *file_name) {
 
   system(command);
 
-  printf("The backup file was created.");
+  printf("The backup file was created.\n");
 }
 
 /**
@@ -86,7 +86,7 @@ int main(int argc, char * argv[]) {
     get_modification_date(file_info);
     get_last_access_date(file_info);
   } else {
-    printf("Some in stat read");
+    printf("Some error in stat read\n");
     return 0;
   }
 

@@ -20,3 +20,44 @@ Modified in Thu Oct 20 19:23:16 2016
 Last acess in Thu Oct 20 19:23:17 2016
 
 Como ilustrado acima, os metadados são alterados, o que não satisfaz a condição. Portanto fomos consultar em cp --help, e existe uma flag(-p) que preserva esses dados. Logo a solução irá utilizar essa flag para fazer o backup.
+
+
+## Data de criação
+
+Segundo vários tópicos da web, colocados como referência abaixo, o padrão POSIX define apenas três datas diferentes para serem salvas: Data de acesso, ultima modificação e a ultima modificação dos metadados do arquivo. Nos modernos sistemas de arquivos do Linux, como ext4, usado nesse experimento, a informação de data de criação é mantida, porém o sistema operacional Linux não provê nenhuma forma de se recuperar isso. Pesquisando mais a fundo sobre o porque essa data não estar disponível, encontramos algumas respostas do mantenedor principal Linus Torvalds sobre essa informação:
+
+> The nice thing about this is also that if this is supposed
+> to be fully usable for Windows clients, the birthtime needs
+> to be changeable. That's what NTFS semantics gives you, thus
+> Windows clients tend to require it.
+
+Ok. So it's not really a creation date, exactly the same way ctime
+isn't at all a creation date.
+
+And maybe that actually hints at a better solution: maybe a better
+model is to create a new per-thread flag that says "do ctime updates
+the way windows does them".
+
+So instead of adding another "btime" - which isn't actually what even
+windows does - just admit that the _real_ issue is that Unix and
+Windows semantics are different for the pre-existing "ctime".
+
+The fact is, windows has "access time", "modification time" and
+"creation time" _exactly_ like UNIX. It's just that the ctime has
+slightly different semantics in windows vs unix. So quite frankly,
+it's totally insane to introduce a "birthtime", when that isn't even
+what windows wants, just because people cannot face the actual real
+difference.
+
+Tell me why we shouldn't just do this right?
+
+Outro email:
+http://lwn.net/Articles/397445/
+
+Logo, pela visão de Linus, o seu SO não deve prover algo simplesmente por que o windows prove e o recurso ctime(do padrão POSIX) é e deve ser semanticamente diferente nesses SOs. Alguns contribuidores importantes parecem discordar de Linus, como em http://lwn.net/Articles/397448/, tal que foi criada uma issue para uma extensão de stat: xstat(http://lwn.net/Articles/394279/) que manipula dentre outras informações, a data de criação de um arquivo.
+
+## Referências
+
+http://unix.stackexchange.com/questions/91197/how-to-find-creation-date-of-file
+
+http://lwn.net/Articles/397442/
