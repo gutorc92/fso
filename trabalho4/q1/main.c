@@ -23,6 +23,13 @@
 
 #define STR_SIZE 64
 
+void get_creation_date(char *file_name, char *dir) {
+  char *command = "sudo debugfs -R 'stat $FILE_DIR' $DIR_DISK | grep crtime\n";
+  printf("Create date by debugfs:\n");
+  system(command);
+  printf("-----------------------\n");
+}
+
 void get_modification_date(struct stat *file_info) {
   time_t modificated_in;
   char timestr[STR_SIZE];
@@ -65,7 +72,7 @@ void create_backup(char *file_name) {
 }
 
 /**
- * Recebe nome_arquivo AAAAMMDDHHmm
+ * Recebe nome_arquivo AAAAMMDDHHmm directory_of_file partition
  */
 int main(int argc, char * argv[]) {
   char *file_name = argv[1];
@@ -83,6 +90,7 @@ int main(int argc, char * argv[]) {
   read_status = stat(file_name, file_info);
 
   if(read_status == 0) {
+    get_creation_date(file_name, argv[3]);
     get_modification_date(file_info);
     get_last_access_date(file_info);
   } else {

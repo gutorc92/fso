@@ -56,6 +56,12 @@ http://lwn.net/Articles/397445/
 
 Logo, pela visão de Linus, o seu SO não deve prover algo simplesmente por que o windows prove e o recurso ctime(do padrão POSIX) é e deve ser semanticamente diferente nesses SOs. Alguns contribuidores importantes parecem discordar de Linus, como em http://lwn.net/Articles/397448/, tal que foi criada uma issue para uma extensão de stat: xstat(http://lwn.net/Articles/394279/) que manipula dentre outras informações, a data de criação de um arquivo.
 
+Logo, pelo SO seria dificil achar essa informação. Mas foi navegando em foruns, que ouvimos falar de uma aplicação chamada debugfs(debug filesystem), presente por default na distro Linux utilizada. Ao visualizar o manual do debugfs temos que o aplicativo tinha suporte para sistemas de arquivo ext2, ext3 e ext4. Como visto em outros tópicos citados acima, esses sistemas de arquivos possuem a data de criação armazenada, ela se chama crtime. Através de múltiplos tópicos, achamos o seguinte:
+
+http://askubuntu.com/questions/470134/how-to-find-the-creation-time-of-a-file
+
+Reproduzindo os passos recebemos uma data chamada crtime, para testa-la, foi usado o commando touch no arquivo, então ao reexecutar o experimento, a data permaneceu, enquanto ctime, atime e mtime foram modificadas.
+
 ## Referências
 
 http://unix.stackexchange.com/questions/91197/how-to-find-creation-date-of-file
