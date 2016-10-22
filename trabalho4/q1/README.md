@@ -63,8 +63,13 @@ http://askubuntu.com/questions/470134/how-to-find-the-creation-time-of-a-file
 Reproduzindo os passos recebemos uma data chamada crtime, para testa-la, foi usado o commando touch no arquivo, então ao reexecutar o experimento, a data permaneceu, enquanto ctime, atime e mtime foram modificadas.
 
 ## Atualizando datas
+Para atualizar atime e mtime, basta usar touch, ele tem flags para isso, portanto foi utilizado em código:
+
 touch -amt 0711171533 image_test.jpg
-sudo debugfs -R 'stat /kuwener/workspaces/C/fso/trabalho4/q1/image_test.jpg' $DIR_DISK | grep crtime
+
+Já a crtime, outrora consultada pelo debugfs, teve que ser mudada por ele também, pra isso setamos o inode diretamente, porém houve uma dificuldade em entender que tipo de informação ele aceita para essa operação, uma vez que passados parametros de data em string e segundos não foi suficiente para uma data conforme esperada. O comando utilizado é nesse formato:
+
+sudo debugfs -w -R 'set_inode_field /kuwener/workspaces/C/fso/trabalho4/q1/image_test.jpg crtime 20100101' $DIR_DISK
 
 ## Referências
 

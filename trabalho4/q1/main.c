@@ -91,20 +91,14 @@ void change_time_metadata(char *file_name, char *date) {
 
   // Now modify the creation date
   char *sec_cmd = malloc(sizeof(char)*516);
-  // accepts data like sec
-
-  // char *red_date = malloc(sizeof(char)*8);
-  // strcpy(red_date, date);
-  // red_date[8] = '\0';
+  // accepts data like sec?
   struct tm tm;
   time_t t;
   strptime(date, "%Y%m%d%H%M", &tm);
   t = mktime(&tm);
 
-  char time_str[15];
-  sprintf(time_str, "%d", (int) t);
-
-  printf("Time: %s\n", time_str);
+  char *time_str = malloc(sizeof(char)*10);
+  sprintf(time_str, "%ld", (long) t);
 
   strcat(sec_cmd, "sudo debugfs -w -R \"set_inode_field $FILE_DIR crtime ");
   strcat(sec_cmd, time_str);
