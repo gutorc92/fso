@@ -4,14 +4,8 @@
  *      Phelipe Wener  - 120132893
  *      Gustavo Coelho - 110030559
  *
- * Enunciado:
- * Implemente o programa q03a que realize a multiplicação de matrizes de forma
- * sequencial, ou seja, execute todas as operações em uma única thread (a thread
- * principal do processo).
- *
- * As observações desse programa em resposta ao enunciado estão no arquivo
- * README.md nessa mesma pasta.
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,37 +50,62 @@ int read_args(char * argc[], char ** directory, char ** search, int * num){
 	return 0;
 }
 
+int print_file(char * file, int *nr_file){
+    int nr = *(nr_file);
+    nr++;
+    printf("\t%d. %s --\n",nr,file);
+    FILE * fp;
+    fp = fopen(file, "r");
+    if(fp != NULL){
+        //printf("Chegou aqui\n");
+        char buffer[30];
+        fgets(buffer,30,fp);
+        printf("\t  %s\n",buffer);
+        fclose(fp);
+    }
+    
+    return 1;
+}
+
+
+
 int child_dir(char * name, char * search, int * nr_printed_lines,int * nr_lines){
 	if(*(nr_printed_lines) >= *(nr_lines)){
 		return 1;
 	}
-
+    char name2[1024];
+    //printf("Dir: %s\n",name);
 	DIR *dp;
 	struct dirent *ep;
 	char * found = NULL;
 	dp = opendir(name);
 	if(dp != NULL){
 		while((ep = readdir(dp))){
+            strcpy(name2,name);
 			if(ep->d_type == DT_REG){
-				printf("It is a file %s\n",ep->d_name);
+				//printf("It is a file %s\n",ep->d_name);
 				found = strstr(ep->d_name,search);
 				if(found != NULL){
-					if(*(nr_printed_lines) < *(nr_lines)){
-						printf("\tIt matches a file\n");
+					if(*(nr_printed_lines) <= *(nr_lines)){
+						//printf("\tIt matches a file\n");
+						strcat(name2,"/");
+                        print_file(strcat(name2,ep->d_name),nr_printed_lines);                   
 						(*nr_printed_lines)++;
-						printf("\tPrinted lines: %d\n",*(nr_printed_lines));
-						printf("\tNr lines: %d\n",*(nr_lines));
+                        //printf("\tPrinted lines: %d\n",*(nr_printed_lines));
+						//printf("\tNr lines: %d\n",*(nr_lines));
+
 					}else{
 						(void)closedir(dp);
 						return 0;
 					}
 				}
 			}else if(ep->d_type == DT_DIR){
-				printf("It is a directory %s\n",ep->d_name);
-				printf("\tResult comp: %d\n",strcmp(ep->d_name,".") == 0 || strcmp(ep->d_name,"..") == 0);
+				//printf("It is a directory %s\n",ep->d_name);
+				//printf("\tResult comp: %d\n",strcmp(ep->d_name,".") == 0 || strcmp(ep->d_name,"..") == 0);
 				if(!(strcmp(ep->d_name,".") == 0 || strcmp(ep->d_name,"..") == 0)){
-					printf("\tIt will scan the dir directory\n");
-					child_dir(ep->d_name,search,nr_printed_lines,nr_lines);
+					//printf("\tIt will scan the dir directory %s\n",ep->d_name);
+                    strcat(name2,"/");
+					child_dir(strcat(name2,ep->d_name),search,nr_printed_lines,nr_lines);
 				}
 			}
 		}
@@ -108,7 +127,8 @@ int main(int argv, char * argc[]) {
 	if(read_args(argc,&directory,&search, &num_lines)){
 		return 1;
 	}
-	print_args(directory,search,&num_lines);
+	//print_args(directory,search,&num_lines);
+    printf("Resultado de buscador -- \"%s\" na pasta %s\n",search,directory); 
 	child_dir(directory,search,&nr_lines_printed,&num_lines);
 	free(directory);
 	free(search);

@@ -8,7 +8,7 @@ CFLAGS = -g -Wall --std=c99 -D_BSD_SOURCE
 #Compile
 CC=gcc
 
-TARGET = prog
+TARGET = buscador
 
 
 $(TARGET):
