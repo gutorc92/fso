@@ -23,8 +23,11 @@
 
 #define STR_SIZE 64
 
-void get_creation_date(char *file_name, char *dir) {
-  char *command = "sudo debugfs -R 'stat $FILE_DIR' $DIR_DISK | grep crtime\n";
+/*
+ * This method needs execution of prepare.sh before
+ */
+void get_creation_date(char *file_name) {
+  char *command = "sudo debugfs -R \"stat $FILE_DIR\" $DIR_DISK | grep crtime\n";
   printf("Create date by debugfs:\n");
   system(command);
   printf("-----------------------\n");
@@ -71,8 +74,38 @@ void create_backup(char *file_name) {
   printf("The backup file was created.\n");
 }
 
+void change_time_metadata(char *file_name, char *date) {
+  // Modify access and modify date
+  char *basic_cmd = "touch -amt ";
+  char *first_cmd = malloc(sizeof(char)*516);
+
+  strcat(first_cmd, basic_cmd);
+  strcat(first_cmd, date);
+  strcat(first_cmd, " ");
+  strcat(first_cmd, file_name);
+  printf("First cmd is %s\n", first_cmd);
+
+  // needs run two times to set atime and mtime
+  system(first_cmd);
+  system(first_cmd);
+
+  // Now modify the creation date
+  char *sec_cmd = malloc(sizeof(char)*516);
+  // accepts data like sec
+  char *red_date = malloc(sizeof(char)*8);
+  strcpy(red_date, date);
+  red_date[8] = '\0';
+  strcat(sec_cmd, "sudo debugfs -w -R \"set_inode_field $FILE_DIR crtime ");
+  strcat(sec_cmd, red_date);
+  strcat(sec_cmd, "\" $DIR_DISK");
+
+  system(sec_cmd);
+
+  printf("Date of creation, access and modification was modified\n");
+}
+
 /**
- * Recebe nome_arquivo AAAAMMDDHHmm directory_of_file partition
+ * Recebe nome_arquivo AAAAMMDDHHmm
  */
 int main(int argc, char * argv[]) {
   char *file_name = argv[1];
@@ -81,7 +114,7 @@ int main(int argc, char * argv[]) {
   create_backup(file_name);
 
   printf("File name: %s\n", file_name);
-  printf("Date passed: %s\n", input_date);
+  printf("Date passed: %s\n\n", input_date);
 
   struct stat *file_info = malloc(sizeof(struct stat));
   int read_status;
@@ -90,13 +123,15 @@ int main(int argc, char * argv[]) {
   read_status = stat(file_name, file_info);
 
   if(read_status == 0) {
-    get_creation_date(file_name, argv[3]);
+    get_creation_date(file_name);
     get_modification_date(file_info);
     get_last_access_date(file_info);
   } else {
     printf("Some error in stat read\n");
     return 0;
   }
+
+  change_time_metadata(file_name, input_date);
 
   return 0;
 }

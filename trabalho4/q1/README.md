@@ -62,6 +62,10 @@ http://askubuntu.com/questions/470134/how-to-find-the-creation-time-of-a-file
 
 Reproduzindo os passos recebemos uma data chamada crtime, para testa-la, foi usado o commando touch no arquivo, então ao reexecutar o experimento, a data permaneceu, enquanto ctime, atime e mtime foram modificadas.
 
+## Atualizando datas
+touch -amt 0711171533 image_test.jpg
+sudo debugfs -R 'stat /kuwener/workspaces/C/fso/trabalho4/q1/image_test.jpg' $DIR_DISK | grep crtime
+
 ## Referências
 
 http://unix.stackexchange.com/questions/91197/how-to-find-creation-date-of-file
