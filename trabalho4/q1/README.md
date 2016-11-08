@@ -30,26 +30,26 @@ Segundo vários tópicos da web, colocados como referência abaixo, o padrão PO
 > to be fully usable for Windows clients, the birthtime needs
 > to be changeable. That's what NTFS semantics gives you, thus
 > Windows clients tend to require it.
-
-Ok. So it's not really a creation date, exactly the same way ctime
-isn't at all a creation date.
-
-And maybe that actually hints at a better solution: maybe a better
-model is to create a new per-thread flag that says "do ctime updates
-the way windows does them".
-
-So instead of adding another "btime" - which isn't actually what even
-windows does - just admit that the _real_ issue is that Unix and
-Windows semantics are different for the pre-existing "ctime".
-
-The fact is, windows has "access time", "modification time" and
-"creation time" _exactly_ like UNIX. It's just that the ctime has
-slightly different semantics in windows vs unix. So quite frankly,
-it's totally insane to introduce a "birthtime", when that isn't even
-what windows wants, just because people cannot face the actual real
-difference.
-
-Tell me why we shouldn't just do this right?
+>
+> Ok. So it's not really a creation date, exactly the same way ctime
+> isn't at all a creation date.
+> 
+> And maybe that actually hints at a better solution: maybe a better
+> model is to create a new per-thread flag that says "do ctime updates
+> the way windows does them".
+>
+> So instead of adding another "btime" - which isn't actually what even
+> windows does - just admit that the _real_ issue is that Unix and
+> Windows semantics are different for the pre-existing "ctime".
+> 
+> The fact is, windows has "access time", "modification time" and
+> "creation time" _exactly_ like UNIX. It's just that the ctime has
+> slightly different semantics in windows vs unix. So quite frankly,
+> it's totally insane to introduce a "birthtime", when that isn't even
+> what windows wants, just because people cannot face the actual real
+> difference.
+>
+> Tell me why we shouldn't just do this right?
 
 Outro email:
 http://lwn.net/Articles/397445/
