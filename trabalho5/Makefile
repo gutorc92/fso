@@ -19,7 +19,7 @@ all: $(TARGET)  clear
 
 
 $(OBJ1) : $(PROG1)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -D _BSD_SOURCE -c -o $@ $<
 
 $(TARGET): $(OBJ1) 
 	$(CC) $(CFLAGS) -o $@ $^ -lm -lpthread
