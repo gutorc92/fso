@@ -53,7 +53,7 @@ void handler(int dumpy) {
 void* print(void * arg){
 	struct params * p = (struct params *)arg;
 	char text[threads_number];
-	for(int i = 0; i < p->nr_outputs; i++){
+	for(int i = 0; i < p->nr_outputs; i++) {
 		text[i] = p->caracter;
 	}
 
@@ -63,7 +63,7 @@ void* print(void * arg){
 		printf("%s\n", text);
 		pthread_mutex_unlock(&print_mutex);
 		count_lines_thread[p->nr_outputs-1]++;
-  	usleep(500000);
+		usleep(500000);
 	}
 	return NULL;
 }
