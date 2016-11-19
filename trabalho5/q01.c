@@ -52,7 +52,10 @@ void handler(int dumpy) {
 
 void* print(void * arg){
 	struct params * p = (struct params *)arg;
-	char text[threads_number];
+	char * text = malloc(sizeof(char) * p->nr_outputs);
+    if(text == NULL){
+        fprintf(stderr,"Can allocate vetor text for thread %d\n",p->nr_outputs);
+    }
 	for(int i = 0; i < p->nr_outputs; i++){
 		text[i] = p->caracter;
 	}
@@ -65,10 +68,15 @@ void* print(void * arg){
 		count_lines_thread[p->nr_outputs-1]++;
   	usleep(500000);
 	}
+    free(text);
 	return NULL;
 }
 
 int main(int argv,char *argc[]) {
+    if(argv != 2){
+		printf("Número de parametros inválido\n");
+		exit(EXIT_FAILURE);
+    }
 	threads_number = atoi(argc[1]);
 	// Thread number should be between (0, 10)
 	if(threads_number > 10 || threads_number <= 0) {
@@ -80,8 +88,20 @@ int main(int argv,char *argc[]) {
 	signal(SIGINT, handler);
 
 	count_lines_thread = malloc(sizeof(int) * threads_number);
+    if(count_lines_thread == NULL){
+        fprintf(stderr,"The vector count_lines_thread could not be allocated"); 
+        return 1;
+    }
 	thread_ids = malloc(sizeof(pthread_t) * threads_number);
+    if(thread_ids == NULL){
+        fprintf(stderr,"The vector thread_ids could not be allocated"); 
+        return 1;
+    }
 	params * parms = malloc(sizeof(params) * threads_number);
+    if(parms == NULL){
+        fprintf(stderr,"The vector params could not be allocated"); 
+        return 1;
+    }
 
 	for(int i = 0; i < threads_number; i++) {
 	  params * p = &parms[i];
@@ -89,7 +109,7 @@ int main(int argv,char *argc[]) {
 		// ASCII value of initial letter (a)
 		p->caracter = ASCII_A;
 		p->caracter += i;
-	  pthread_create(&thread_ids[i], NULL, &print, p);
+        pthread_create(&thread_ids[i], NULL, &print, p);
 	}
 
 	// waiting ctrl+C
