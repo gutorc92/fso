@@ -65,7 +65,7 @@ void* print(void * arg){
 		count_lines_thread[p->nr_outputs-1]++;
 		usleep(500000);
 	}
-    free(text);
+	free(text);
 	return NULL;
 }
 
