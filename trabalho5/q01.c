@@ -21,7 +21,9 @@
 #include <unistd.h>
 #include <signal.h>
 
-struct params{
+#define ASCII_A 97
+
+struct params {
 	int nr_outputs;
 	int caracter;
 };
@@ -32,48 +34,65 @@ pthread_mutex_t print_mutex;
 int count_lines_thread[10];
 int keep_looping = 1;
 pthread_t* thread_ids;
- 
-void handle(int dumpy){
+int threads_number = 0;
+
+void handler(int dumpy) {
 	keep_looping = 0;
-	printf("Encerrando aplicação.Aguardando finalização de threads\n"); 
-	for(int i = 0; i < 10; i++){
+
+	printf("Encerrando aplicação.Aguardando finalização de threads\n");
+	for(int i = 0; i < threads_number; i++) {
 		pthread_join(thread_ids[i], NULL);
-    	}
+	}
+
 	printf("Aplicação encerrada com sucesso!\n");
-	for(int i = 0; i < 10; i++){
-		printf("thread %d: %d\n", i+1,count_lines_thread[i]);
+	for(int i = 0; i < threads_number; i++) {
+		printf("thread %d: %d\n", i+1, count_lines_thread[i]);
 	}
 }
 
 void* print(void * arg){
 	struct params * p = (struct params *)arg;
-	char text[10];
+	char text[threads_number];
 	for(int i = 0; i < p->nr_outputs; i++){
 		text[i] = p->caracter;
 	}
+	text[p->nr_outputs] = '\0';
+
 	p->nr_outputs--;
-	while(keep_looping){
-		pthread_mutex_lock(&print_mutex);
-		printf("%s\n",text);
+	// waiting Ctrl + C
+	while(keep_looping) {
+		printf("%s\n", text);
 		count_lines_thread[p->nr_outputs]++;
+		pthread_mutex_lock(&print_mutex);
+  	usleep(500000);
 		pthread_mutex_unlock(&print_mutex);
-        	usleep(500002);
 	}
 	return NULL;
 }
 
 int main(int argv,char *argc[]) {
-    signal(SIGINT, handle);
-    thread_ids = malloc(sizeof(pthread_t) * 10);    	
-    params * parms = malloc(sizeof(params) * 10);
-    int c = 97;
-    for(int i = 0; i < 10; i++){
-        params * p = &parms[i];
-        p->nr_outputs = i + 1;
-        p->caracter = c;
-        c++;
-        pthread_create(&thread_ids[i], NULL, &print, p); 
-    }
-    while(keep_looping);
-    return 0;
+	threads_number = atoi(argc[1]);
+	// Thread number should be between (0, 10)
+	if(threads_number > 10 || threads_number <= 0) {
+		printf("Número de threads inválido\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// wait a SIGINT to run handle_function
+	signal(SIGINT, handler);
+
+	thread_ids = malloc(sizeof(pthread_t) * 10);
+	params * parms = malloc(sizeof(params) * 10);
+
+	for(int i = 0; i < threads_number; i++) {
+	  params * p = &parms[i];
+	  p->nr_outputs = i - 1;
+		// ASCII value of initial letter (a)
+	  p->caracter = ASCII_A + i;
+	  pthread_create(&thread_ids[i], NULL, &print, p);
+	}
+
+	// waiting ctrl+C
+	while(keep_looping);
+	return 0;
 }
