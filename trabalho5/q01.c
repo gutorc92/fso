@@ -31,7 +31,7 @@ struct params {
 typedef struct params params;
 
 pthread_mutex_t print_mutex;
-int count_lines_thread[10];
+int *count_lines_thread;
 int keep_looping = 1;
 pthread_t* thread_ids;
 int threads_number = 0;
@@ -56,16 +56,14 @@ void* print(void * arg){
 	for(int i = 0; i < p->nr_outputs; i++){
 		text[i] = p->caracter;
 	}
-	text[p->nr_outputs] = '\0';
 
-	p->nr_outputs--;
 	// waiting Ctrl + C
 	while(keep_looping) {
-		printf("%s\n", text);
-		count_lines_thread[p->nr_outputs]++;
 		pthread_mutex_lock(&print_mutex);
-  	usleep(500000);
+		printf("%s\n", text);
 		pthread_mutex_unlock(&print_mutex);
+		count_lines_thread[p->nr_outputs-1]++;
+  	usleep(500000);
 	}
 	return NULL;
 }
@@ -81,14 +79,16 @@ int main(int argv,char *argc[]) {
 	// wait a SIGINT to run handle_function
 	signal(SIGINT, handler);
 
-	thread_ids = malloc(sizeof(pthread_t) * 10);
-	params * parms = malloc(sizeof(params) * 10);
+	count_lines_thread = malloc(sizeof(int) * threads_number);
+	thread_ids = malloc(sizeof(pthread_t) * threads_number);
+	params * parms = malloc(sizeof(params) * threads_number);
 
 	for(int i = 0; i < threads_number; i++) {
 	  params * p = &parms[i];
-	  p->nr_outputs = i - 1;
+	  p->nr_outputs = i+1;
 		// ASCII value of initial letter (a)
-	  p->caracter = ASCII_A + i;
+		p->caracter = ASCII_A;
+		p->caracter += i;
 	  pthread_create(&thread_ids[i], NULL, &print, p);
 	}
 
