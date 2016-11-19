@@ -4,13 +4,9 @@
  *      Phelipe Wener  - 120132893
  *      Gustavo Coelho - 110030559
  *
- * Enunciado:
- * Implemente o programa q03a que realize a multiplicação de matrizes de forma
- * sequencial, ou seja, execute todas as operações em uma única thread (a thread
- * principal do processo).
- *
  * As observações desse programa em resposta ao enunciado estão no arquivo
- * README.md nessa mesma pasta.
+ * README.md nessa mesma pasta. Sobre configurações e mais informações tecnicas
+ * veja documentation.html.
  */
 
 #include <pthread.h>
@@ -45,6 +41,7 @@ void handler(int dumpy) {
 	}
 
 	printf("Aplicação encerrada com sucesso!\n");
+	printf("Estatísticas:\n");
 	for(int i = 0; i < threads_number; i++) {
 		printf("thread %d: %d\n", i+1, count_lines_thread[i]);
 	}
